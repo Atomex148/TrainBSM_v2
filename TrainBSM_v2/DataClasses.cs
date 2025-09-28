@@ -36,6 +36,9 @@ namespace TrainBSM_v2
                 else _value = value;
             }
         }
+
+        public float Min => _min ?? float.NaN;
+        public float Max => _max ?? float.NaN;
     }
 
     // -- Получаем по CAN данные
@@ -56,7 +59,7 @@ namespace TrainBSM_v2
             Critical
         }
 
-        public Status GetTEDStatus(float current)
+        public static Status GetTEDStatus(float current)
         {
             if (current < 950.0)
                 return Status.Normal;
@@ -65,14 +68,14 @@ namespace TrainBSM_v2
             return Status.Critical;
         }
 
-        public Status GetSupplyLineStatus(float pressure)
+        public static Status GetSupplyLineStatus(float pressure)
         {
             if (pressure < 7.5 || pressure > 8.5)
                 return Status.Warning;
             return Status.Normal;
         }
 
-        public Status GetBrakeLineStatus(float pressure)
+        public static Status GetBrakeLineStatus(float pressure)
         {
             if (pressure < 2.8)
                 return Status.None;
@@ -81,7 +84,7 @@ namespace TrainBSM_v2
             return Status.Warning;
         }
 
-        public Status GetBrakeCylindersStatus(float pressure)
+        public static Status GetBrakeCylindersStatus(float pressure)
         {
             if (pressure < 1.5)
                 return Status.None;
@@ -90,7 +93,7 @@ namespace TrainBSM_v2
             return Status.Warning;
         }
 
-        public Status GetEngineRPMStatus(float engineRPM)
+        public static Status GetEngineRPMStatus(float engineRPM)
         {
             if (engineRPM >= 600.0 && engineRPM <= 1600.0)
                 return Status.Normal;
@@ -99,7 +102,7 @@ namespace TrainBSM_v2
             return Status.Critical;
         }
 
-        public Status GetIntakeAirTemperatureStatus(float temperature)
+        public static Status GetIntakeAirTemperatureStatus(float temperature)
         {
             if (temperature <= 75.0)
                 return Status.Normal;
@@ -108,7 +111,7 @@ namespace TrainBSM_v2
             return Status.Critical;
         }
 
-        public Status GetCoolantTemperatureStatus(float temperature)
+        public static Status GetCoolantTemperatureStatus(float temperature)
         {
             if (temperature >= 8.0 && temperature <= 105.0)
                 return Status.Normal;
@@ -117,7 +120,7 @@ namespace TrainBSM_v2
             return Status.Critical;
         }
 
-        public Status GetOilTemperatureStatus(float temperature)
+        public static Status GetOilTemperatureStatus(float temperature)
         {
             if (temperature >= 8.0 && temperature <= 85.0)
                 return Status.Normal;
@@ -126,7 +129,7 @@ namespace TrainBSM_v2
             return Status.Critical;
         }
 
-        public Status GetOilPressureStatus(float pressure)
+        public static Status GetOilPressureStatus(float pressure)
         {
             if (pressure > 0.6)
                 return Status.Normal;
@@ -284,11 +287,25 @@ namespace TrainBSM_v2
     //    Добавляется же еще SPN (Suspect Parameter Number), он же уникальный номер параметра
     public class EngineAnalogValue : AnalogValue
     {
-        public ushort SPN { get; }
+        public enum EngineAnalogValueType
+        {
+            LoadAtCurrentSpeed = 0,
+            FuelRackPosition,
+            EngineRpm,
+            IntakeManifoldPressure,
+            IntakeAirTemperature,
+            CoolantTemperature,
+            OilTemperature,
+            OilPressure
+        }
 
-        public EngineAnalogValue(ushort spn, float? min = null, float? max = null) : base(min, max)
+        public ushort SPN { get; }
+        public string? unitOfMeasurement { get; }
+
+        public EngineAnalogValue(ushort spn, float? min = null, float? max = null, string? unitOfMeasurement = null) : base(min, max)
         {
             SPN = spn;
+            this.unitOfMeasurement = unitOfMeasurement;
         }
     }
 
@@ -296,26 +313,28 @@ namespace TrainBSM_v2
     {
         public ushort SPN { get; }
         public ulong Value { get; set; }
+        public string? unitOfMeasurement { get; }
 
-        public EngineAnalogValueUL(ushort spn, ulong value = 0)
+        public EngineAnalogValueUL(ushort spn, ulong value = 0, string? unitOfMeasurement = null)
         {
             SPN = spn;
             Value = value;
+            this.unitOfMeasurement = unitOfMeasurement;
         }
     }
 
     public class EngineAnalogData : CanData
     {
-        public EngineAnalogValue LoadAtCurrentSpeed { get; } = new(92, -125, 125);
-        public EngineAnalogValue FuelRackPosition { get; } = new(1210, 0, 100);
-        public EngineAnalogValue EngineRpm { get; } = new(190, 0, 2000);
-        public EngineAnalogValue IntakeManifoldPressure { get; } = new(102, 0, 5);
-        public EngineAnalogValue IntakeAirTemperature { get; set; } = new(105, -40, 100);
-        public EngineAnalogValue CoolantTemperature { get; } = new(110, 0, 120);
-        public EngineAnalogValue OilTemperature { get; } = new(175, 0, 120);
-        public EngineAnalogValue OilPressure { get; } = new(100, 0, 20);
-        public EngineAnalogValueUL TotalHours { get; } = new(247);
-        public EngineAnalogValueUL TotalFuel { get; } = new(250);
+        public EngineAnalogValue LoadAtCurrentSpeed { get; } = new(92, -125, 125, "Нагрузка на текущих оборотах, %");
+        public EngineAnalogValue FuelRackPosition { get; } = new(1210, 0, 100, "Положение рейки ТНВД, %");
+        public EngineAnalogValue EngineRpm { get; } = new(190, 0, 2000, "Частота вращения коленчатого вала дизеля, об/мин");
+        public EngineAnalogValue IntakeManifoldPressure { get; } = new(102, 0, 5, "Давление воздуха во впускном коллекторе, кг/см^2");
+        public EngineAnalogValue IntakeAirTemperature { get; set; } = new(105, -40, 100, "Температура воздуха во впускном коллекторе, °С");
+        public EngineAnalogValue CoolantTemperature { get; } = new(110, 0, 120, "Температура охлаждающей жидкости, °С");
+        public EngineAnalogValue OilTemperature { get; } = new(175, 0, 120, "Температура масла, °С");
+        public EngineAnalogValue OilPressure { get; } = new(100, 0, 20, "Давление масла, кг/см^2");
+        public EngineAnalogValueUL TotalHours { get; } = new(247, unitOfMeasurement: "Общий пробег, час");
+        public EngineAnalogValueUL TotalFuel { get; } = new(250, unitOfMeasurement: "Общее использование топлива, л");
     }
 
     // -- Ошибки двигателя
@@ -450,5 +469,24 @@ namespace TrainBSM_v2
                 Messages = new List<DieselMessage>();
             }
         }
+    }
+
+    public class DieselLocomotive
+    {
+        public BRUEPAnalogData BRUEPAnalog { get; } = new();
+        public BRUEPDiscreteInputs BRUEPDiscrete { get; } = new();
+
+        public MSUDToBRUEP MSUDToBRUEP { get; } = new();
+        public MSUDAnalogData MSUDAnalog { get; } = new();
+        public MSUDDiscreteInputs MSUDDiscrete { get; } = new();
+        public MSUDDiscreteOutputs MSUDDiscreteOutputs { get; } = new();
+
+        public EngineAnalogData EngineAnalog { get; } = new();
+
+        public Thresholds Thresholds { get; } = new();
+
+        public DateTime LastUpdated { get; private set; } = DateTime.MinValue;
+
+        public DieselLocomotive() { }
     }
 }

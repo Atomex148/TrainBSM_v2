@@ -11,36 +11,35 @@ namespace TrainBSM_v2
 {
     public partial class MainWindow : Window
     {
-        private bool isMenuVisible = false;
-        private bool isAnimating = false;
+        private bool _isMenuVisible = false;
+        private bool _isAnimating = false;
 
-        private Logger logger = new Logger();
-        private DataGrid table = new DataGrid();
+        private DieselLocomotive _locomotive = new DieselLocomotive();
+
+        private Logger _logger = new Logger();
+        private EngineControlUnit _engineControlUnit;
 
         public MainWindow()
         {
             InitializeComponent();
 
             SideMenu.RenderTransform = new TranslateTransform(-SideMenu.Width, 0);
-            MainContent.Content = logger;
-            MainGrid.Background = logger.LoggerBackground;
+            MainContent.Content = _logger;
+            MainGrid.Background = _logger.LoggerBackground;
 
-            table.ItemsSource = new[]
-            {
-                new { ID = 1, Name = "Item1" },
-                new { ID = 2, Name = "Item2" },
-            };
+            _engineControlUnit = new EngineControlUnit(_locomotive);
+
             this.PreviewMouseLeftButtonDown += MainWindow_PreviewMouseLeftButtonDown;
 
             foreach (var msg in DieselMessagesCatalog.Messages)
             {
-                logger.AddLog(msg);
+                _logger.AddLog(msg);
             }
         }
 
         private void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (isMenuVisible)
+            if (_isMenuVisible)
             {
                 if (!IsClickInsideElement(SideMenu, e))
                 {
@@ -58,8 +57,8 @@ namespace TrainBSM_v2
 
         private void ShowMenu()
         {
-            if (isAnimating) return;
-            isAnimating = true;
+            if (_isAnimating) return;
+            _isAnimating = true;
 
             Overlay.Visibility = Visibility.Visible;
             Overlay.IsHitTestVisible = true;
@@ -67,12 +66,11 @@ namespace TrainBSM_v2
             var transform = (TranslateTransform)SideMenu.RenderTransform;
             var sideMenuAnimation = new DoubleAnimation
             {
-                From = transform.X,
-                To = 0,
+                By = SideMenu.Width,
                 Duration = TimeSpan.FromMilliseconds(500),
                 EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut }
             };
-            sideMenuAnimation.Completed += (s, e) => { isAnimating = false; };
+            sideMenuAnimation.Completed += (s, e) => { _isAnimating = false; };
             transform.BeginAnimation(TranslateTransform.XProperty, sideMenuAnimation);
 
             var overlayAnimation = new DoubleAnimation
@@ -84,19 +82,18 @@ namespace TrainBSM_v2
             };
             Overlay.BeginAnimation(UIElement.OpacityProperty, overlayAnimation);
 
-            isMenuVisible = true;
+            _isMenuVisible = true;
         }
 
         private void HideMenu()
         {
-            if (isAnimating) return;
-            isAnimating = true;
+            if (_isAnimating) return;
+            _isAnimating = true;
 
             var transform = (TranslateTransform)SideMenu.RenderTransform;
             var sideMenuAnimation = new DoubleAnimation
             {
-                From = transform.X,
-                To = -SideMenu.Width,
+                By = -SideMenu.Width,
                 Duration = TimeSpan.FromMilliseconds(500),
                 EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut }
             };
@@ -113,16 +110,16 @@ namespace TrainBSM_v2
             {
                 Overlay.Visibility = Visibility.Collapsed;
                 Overlay.IsHitTestVisible = false;
-                isAnimating = false;
+                _isAnimating = false;
             };
             Overlay.BeginAnimation(UIElement.OpacityProperty, overlayAnimation);
 
-            isMenuVisible = false;
+            _isMenuVisible = false;
         }
 
         private void ToggleMenu_Click(object sender, RoutedEventArgs e)
         {
-            if (isMenuVisible)
+            if (_isMenuVisible)
                 HideMenu();
             else
                 ShowMenu();
@@ -130,19 +127,19 @@ namespace TrainBSM_v2
 
         private void Overlay_Click(object sender, MouseButtonEventArgs e)
         {
-            if (!isAnimating)
+            if (!_isAnimating)
                 HideMenu();
         }
 
         private void ShowLogger_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = logger;
-            MainGrid.Background = logger.LoggerBackground;
+            MainContent.Content = _logger;
+            MainGrid.Background = _logger.LoggerBackground;
         }
 
-        private void ShowTable_Click(object sender, RoutedEventArgs e)
+        private void ShowEngineControlUnit_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = table;
+            MainContent.Content = _engineControlUnit;
         }
     }
 }

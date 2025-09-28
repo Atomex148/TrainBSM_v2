@@ -8,4 +8,18 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="AppAppearance\needle.png" />
+    <None Remove="AppAppearance\speedometer.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Speedometer\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="AppAppearance\needle.png" />
+    <Resource Include="AppAppearance\speedometer.png" />
+  </ItemGroup>
+
 </Project>
