@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,6 +60,28 @@ namespace TrainBSM_v2.AppAppearance
         public void AddLog(DieselMessage dieselMessage) { 
             Logs.Add(new LoggerMessage { Message = dieselMessage.Message, 
                 Type = dieselMessage.DisplayType, MessageCode = dieselMessage.Code });
+        }
+
+        public void AddLog(EngineFaultSpn engineFault, ushort FMIcode, Thresholds.Status status)
+        {
+            string code = String.Format("{0}+{1}", engineFault.SPN, FMIcode);
+            string message = String.Format("{0}: {1}", engineFault.Description, engineFault.Fmis.FirstOrDefault(f => f.FMI == FMIcode));
+            LoggerMessageType displayType;
+            switch (status)
+            {
+                case Thresholds.Status.Warning:
+                    displayType = LoggerMessageType.Warning;
+                    break;
+                case Thresholds.Status.Critical:
+                    displayType = LoggerMessageType.Error;
+                    break;
+                default:
+                    displayType = LoggerMessageType.Normal;
+                    break;
+            }
+
+            Logs.Add(new LoggerMessage { Message = message, Type = displayType,
+                MessageCode = code });
         }
 
         public void DeleteLastLog()

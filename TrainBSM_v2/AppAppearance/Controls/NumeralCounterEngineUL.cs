@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace TrainBSM_v2.AppAppearance
+namespace TrainBSM_v2.AppAppearance.Controls
 {
     class NumeralCounterEngineUL
     {

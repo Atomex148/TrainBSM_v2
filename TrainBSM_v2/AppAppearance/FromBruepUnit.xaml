@@ -3,11 +3,117 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TrainBSM_v2.AppAppearance"
+             xmlns:local_controls="clr-namespace:TrainBSM_v2.AppAppearance.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="761" d:DesignWidth="984">
-    <Grid>
-        <Grid x:Name="MainGrid" Background="#FFDBFFFE" Margin="8">
+    <Grid x:Name="MainGrid" Background="#FFDBFFFE" Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="110"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="15">
+                    <local_controls:RollingCounter x:Name="GeneratorVoltage" NumbersCount="8"
+                              HorizontalAlignment="Center"/>
+                    <TextBlock Text="Напряжение генератора" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="15">
+                    <local_controls:RollingCounter x:Name="GeneratorExcitationCurrentVoltage" NumbersCount="8"
+                              HorizontalAlignment="Center"/>
+                    <TextBlock Text="Возбуждение (ток)" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="15">
+                    <local_controls:RollingCounter x:Name="GeneratorExcitationTractionVoltage" NumbersCount="8"
+                              HorizontalAlignment="Center"/>
+                    <TextBlock Text="Возбуждение (тяга)" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <local_controls:GaugeControl x:Name="TEDGroup1Current" Grid.Row="0" Grid.Column="0"/>
+                <local_controls:GaugeControl x:Name="TEDGroup2Current" Grid.Row="0" Grid.Column="1"/>
+                <local_controls:GaugeControl x:Name="TEDGroup3Current" Grid.Row="0" Grid.Column="2"/>
+                <local_controls:GaugeControl x:Name="ControllerPosition" Grid.Row="0" Grid.Column="3"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <TabControl x:Name="MainTabControl" Background="Transparent" TabStripPlacement="Bottom">
+                <TabItem Header="Управление и сигналы">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="ControlIndicatorsItemsControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="5"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local_controls:DiscreteIndicator 
+                                        LabelText="{Binding Label}"
+                                        IsActive="{Binding IsActive, Mode=TwoWay}"
+                                        Margin="3,1,3,1"
+                                        VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Реле и защиты">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="RelayIndicatorsItemsControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="4"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local_controls:DiscreteIndicator 
+                                        LabelText="{Binding Label}"
+                                        IsActive="{Binding IsActive, Mode=TwoWay}"
+                                        Margin="3,1,3,1"
+                                        VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Блокировки и неисправности">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="SafetyIndicatorsItemsControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="5"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local_controls:DiscreteIndicator 
+                                        LabelText="{Binding Label}"
+                                        IsActive="{Binding IsActive, Mode=TwoWay}"
+                                        Margin="3,1,3,1"
+                                        VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
         </Grid>
     </Grid>
 </UserControl>

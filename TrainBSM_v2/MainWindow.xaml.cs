@@ -18,6 +18,7 @@ namespace TrainBSM_v2
 
         private Logger _logger = new Logger();
         private EngineControlUnit _engineControlUnit;
+        private FromBruepUnit _fromBruepUnit;
 
         public MainWindow()
         {
@@ -28,6 +29,7 @@ namespace TrainBSM_v2
             MainGrid.Background = _logger.LoggerBackground;
 
             _engineControlUnit = new EngineControlUnit(_locomotive);
+            _fromBruepUnit = new FromBruepUnit(_locomotive);
 
             this.PreviewMouseLeftButtonDown += MainWindow_PreviewMouseLeftButtonDown;
 
@@ -140,6 +142,11 @@ namespace TrainBSM_v2
         private void ShowEngineControlUnit_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = _engineControlUnit;
+        }
+
+        private void ShowFromBRUEPUnit_Click(Object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = _fromBruepUnit;
         }
     }
 }

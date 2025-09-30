@@ -16,6 +16,7 @@
             </StackPanel.RenderTransform>
             <Button Content="Логгер" Margin="5" Click="ShowLogger_Click"/>
             <Button Content="Регулятор двигателя" Margin="5" Click="ShowEngineControlUnit_Click"/>
+            <Button Content="Данные от БРУЭП" Margin="5" Click="ShowFromBRUEPUnit_Click"/>
         </StackPanel>
         <Button x:Name="MenuButton" Content="Menu" Width="100" Height="19"
                 HorizontalAlignment="Right" VerticalAlignment="Top"

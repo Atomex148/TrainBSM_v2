@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TrainBSM_v2.AppAppearance
+namespace TrainBSM_v2.AppAppearance.Controls
 {
     /// <summary>
     /// Логика взаимодействия для RollingNumber.xaml

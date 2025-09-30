@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TrainBSM_v2.AppAppearance.RollingNumber"
+﻿<UserControl x:Class="TrainBSM_v2.AppAppearance.Controls.RollingNumber"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Height="50" Width="30">

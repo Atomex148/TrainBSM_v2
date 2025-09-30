@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TrainBSM_v2.AppAppearance.RollingCounter"
+﻿<UserControl x:Class="TrainBSM_v2.AppAppearance.Controls.RollingCounter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TrainBSM_v2.AppAppearance"

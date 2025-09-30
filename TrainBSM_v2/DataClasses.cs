@@ -16,17 +16,19 @@ namespace TrainBSM_v2
     //    Банально писать меньше кода, хоть и увеличит количество аллокаций, но мне кажется это незначительно
     public class AnalogValue
     {
-        private float _value;
-        private readonly float? _min;
-        private readonly float? _max;
+        private double _value;
+        private readonly double? _min;
+        private readonly double? _max;
+        public string? unitOfMeasurement { get; }
 
-        public AnalogValue(float? min = null, float? max = null)
+        public AnalogValue(double? min = null, double? max = null, string? unit = null)
         {
             _min = min;
             _max = max;
+            unitOfMeasurement = unit;
         }
 
-        public float Value
+        public double Value
         {
             get => _value;
             set
@@ -37,8 +39,8 @@ namespace TrainBSM_v2
             }
         }
 
-        public float Min => _min ?? float.NaN;
-        public float Max => _max ?? float.NaN;
+        public double Min => _min ?? double.NaN;
+        public double Max => _max ?? double.NaN;
     }
 
     // -- Получаем по CAN данные
@@ -59,7 +61,7 @@ namespace TrainBSM_v2
             Critical
         }
 
-        public static Status GetTEDStatus(float current)
+        public static Status GetTEDStatus(double current)
         {
             if (current < 950.0)
                 return Status.Normal;
@@ -68,14 +70,14 @@ namespace TrainBSM_v2
             return Status.Critical;
         }
 
-        public static Status GetSupplyLineStatus(float pressure)
+        public static Status GetSupplyLineStatus(double pressure)
         {
             if (pressure < 7.5 || pressure > 8.5)
                 return Status.Warning;
             return Status.Normal;
         }
 
-        public static Status GetBrakeLineStatus(float pressure)
+        public static Status GetBrakeLineStatus(double pressure)
         {
             if (pressure < 2.8)
                 return Status.None;
@@ -84,7 +86,7 @@ namespace TrainBSM_v2
             return Status.Warning;
         }
 
-        public static Status GetBrakeCylindersStatus(float pressure)
+        public static Status GetBrakeCylindersStatus(double pressure)
         {
             if (pressure < 1.5)
                 return Status.None;
@@ -93,7 +95,7 @@ namespace TrainBSM_v2
             return Status.Warning;
         }
 
-        public static Status GetEngineRPMStatus(float engineRPM)
+        public static Status GetEngineRPMStatus(double engineRPM)
         {
             if (engineRPM >= 600.0 && engineRPM <= 1600.0)
                 return Status.Normal;
@@ -102,7 +104,7 @@ namespace TrainBSM_v2
             return Status.Critical;
         }
 
-        public static Status GetIntakeAirTemperatureStatus(float temperature)
+        public static Status GetIntakeAirTemperatureStatus(double temperature)
         {
             if (temperature <= 75.0)
                 return Status.Normal;
@@ -111,7 +113,7 @@ namespace TrainBSM_v2
             return Status.Critical;
         }
 
-        public static Status GetCoolantTemperatureStatus(float temperature)
+        public static Status GetCoolantTemperatureStatus(double temperature)
         {
             if (temperature >= 8.0 && temperature <= 105.0)
                 return Status.Normal;
@@ -120,7 +122,7 @@ namespace TrainBSM_v2
             return Status.Critical;
         }
 
-        public static Status GetOilTemperatureStatus(float temperature)
+        public static Status GetOilTemperatureStatus(double temperature)
         {
             if (temperature >= 8.0 && temperature <= 85.0)
                 return Status.Normal;
@@ -129,7 +131,7 @@ namespace TrainBSM_v2
             return Status.Critical;
         }
 
-        public static Status GetOilPressureStatus(float pressure)
+        public static Status GetOilPressureStatus(double pressure)
         {
             if (pressure > 0.6)
                 return Status.Normal;
@@ -300,12 +302,10 @@ namespace TrainBSM_v2
         }
 
         public ushort SPN { get; }
-        public string? unitOfMeasurement { get; }
 
-        public EngineAnalogValue(ushort spn, float? min = null, float? max = null, string? unitOfMeasurement = null) : base(min, max)
+        public EngineAnalogValue(ushort spn, double? min = null, double? max = null, string? unitOfMeasurement = null) : base(min, max, unitOfMeasurement)
         {
             SPN = spn;
-            this.unitOfMeasurement = unitOfMeasurement;
         }
     }
 

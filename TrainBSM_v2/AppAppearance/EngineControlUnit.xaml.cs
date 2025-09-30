@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using TrainBSM_v2.AppAppearance.Controls;
 
 using static TrainBSM_v2.EngineAnalogValue.EngineAnalogValueType;
 
@@ -28,7 +29,7 @@ namespace TrainBSM_v2.AppAppearance
     public partial class EngineControlUnit : UserControl
     {
 
-        private Dictionary<GaugeControl, Gauge> _gauges = new();
+        private Dictionary<Controls.GaugeControl, Gauge> _gauges = new();
         private NumeralCounterEngineUL totalHoursCounter;
         private NumeralCounterEngineUL totalFuelCounter;
         private Random _rnd = new Random();
@@ -62,6 +63,8 @@ namespace TrainBSM_v2.AppAppearance
 
             totalHoursCounter.Add(counter++);
             totalFuelCounter.Add(counter += 5);
+
+            CheckAllGaugesForErrors();
         }
 
         private void InitializeGauges(DieselLocomotive locomotive)
@@ -171,5 +174,9 @@ namespace TrainBSM_v2.AppAppearance
                 HideMenu();
         }
 
+        private void CheckAllGaugesForErrors()
+        {
+
+        }
     }
 }
