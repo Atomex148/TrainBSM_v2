@@ -5,16 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local_controls="clr-namespace:TrainBSM_v2.AppAppearance.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="761" 
-             d:DesignWidth="984">
-    <Grid x:Name="MainGrid" Background="#FFDBFFFE">
+             d:DesignHeight="555" d:DesignWidth="784">
+    <Grid x:Name="MainGrid" Background="#FFB3B3B3">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="4" Background="#FFC0FEFF" Margin="10">
+        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="4" Background="#FFE8E8E8" Margin="10">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl x:Name="LogItems">
                     <ItemsControl.ItemTemplate>

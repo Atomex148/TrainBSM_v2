@@ -61,6 +61,10 @@ namespace TrainBSM_v2.AppAppearance
                 item.Update(_rnd.Next((int)item.Min, (int)item.Max));
             }
 
+            LoadAtCurrentSpeed.Update(_rnd.NextDouble() * (LoadAtCurrentSpeed.MaxValue - LoadAtCurrentSpeed.MinValue));
+            FuelRackPosition.Update(_rnd.NextDouble() * (FuelRackPosition.MaxValue - FuelRackPosition.MinValue));
+            EngineRpm.Update(EngineRpm.MinValue + _rnd.NextDouble() * (EngineRpm.MaxValue - EngineRpm.MinValue));
+
             totalHoursCounter.Add(counter++);
             totalFuelCounter.Add(counter += 5);
 
@@ -69,14 +73,6 @@ namespace TrainBSM_v2.AppAppearance
 
         private void InitializeGauges(DieselLocomotive locomotive)
         {
-            _gauges[LoadAtCurrentSpeed] = new Gauge(locomotive.EngineAnalog.LoadAtCurrentSpeed, 0, 270, LoadAtCurrentSpeed);
-            LoadAtCurrentSpeed.Unit = locomotive.EngineAnalog.LoadAtCurrentSpeed.unitOfMeasurement ?? "";
-
-            _gauges[FuelRackPosition] = new Gauge(locomotive.EngineAnalog.FuelRackPosition, 0, 270, FuelRackPosition);
-            FuelRackPosition.Unit = locomotive.EngineAnalog.FuelRackPosition.unitOfMeasurement ?? "";
-
-            _gauges[EngineRpm] = new Gauge(locomotive.EngineAnalog.EngineRpm, 0, 270, EngineRpm, Thresholds.GetEngineRPMStatus);
-            EngineRpm.Unit = locomotive.EngineAnalog.EngineRpm.unitOfMeasurement ?? "";
 
             _gauges[IntakeManifoldPressure] = new Gauge(locomotive.EngineAnalog.IntakeManifoldPressure, 0, 270, IntakeManifoldPressure);
             IntakeManifoldPressure.Unit = locomotive.EngineAnalog.IntakeManifoldPressure.unitOfMeasurement ?? "";
@@ -137,7 +133,6 @@ namespace TrainBSM_v2.AppAppearance
                 _logger.AddLog(msg);
             }
         }
-
         private void HideMenu()
         {
             if (_isAnimating) return;
