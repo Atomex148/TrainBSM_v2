@@ -7,6 +7,7 @@ using System.Windows.Media;
 
 namespace TrainBSM_v2.AppAppearance.Controls
 {
+    /*
     class NumeralCounterEngineUL
     {
         public EngineAnalogValueUL engineAnalogValueUL;
@@ -24,4 +25,5 @@ namespace TrainBSM_v2.AppAppearance.Controls
             _rollingCounter.SetValue(engineAnalogValueUL.Value);
         }
     }
+    */
 }

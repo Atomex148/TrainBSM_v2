@@ -9,7 +9,7 @@
         <Grid x:Name="MainGrid" Width="180" Height="170">
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" MinHeight="0"/>
             </Grid.RowDefinitions>
             <Grid Width="180" Height="140" Grid.Row="0">
                 <!-- Фон -->
@@ -80,9 +80,11 @@
                 </Grid>
             </Grid>
 
-            <TextBlock x:Name="NameText" Text="Sensor Name" FontSize="12" FontWeight="Bold" 
-                       Foreground="#FF424242" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
-                       TextWrapping="Wrap" TextAlignment="Center" Grid.Row="1" Margin="0,0,0,0"/>
+            <TextBlock x:Name="NameText" Text="" FontWeight="Bold"
+                       FontSize="{Binding SensorNameFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Foreground="#FF424242" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                       TextWrapping="Wrap" TextTrimming="None" TextAlignment="Center" Grid.Row="1" 
+                       MaxWidth="180" Margin="0,2,0,0"/>
         </Grid>
     </Viewbox>
 </UserControl>

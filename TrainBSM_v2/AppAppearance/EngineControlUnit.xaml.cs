@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using TrainBSM_v2.AppAppearance.Controls;
+using TrainBSM_v2.AppAppearance.NewControls;
 
 using static TrainBSM_v2.EngineAnalogValue.EngineAnalogValueType;
 
@@ -28,10 +29,9 @@ namespace TrainBSM_v2.AppAppearance
     /// 
     public partial class EngineControlUnit : UserControl
     {
+        private List<IGaugeControl> _gauges = new List<IGaugeControl>();
+        private List<ICounterControl> _counters = new List<ICounterControl>();
 
-        private Dictionary<Controls.GaugeControl, Gauge> _gauges = new();
-        private NumeralCounterEngineUL totalHoursCounter;
-        private NumeralCounterEngineUL totalFuelCounter;
         private Random _rnd = new Random();
         private DispatcherTimer _timer;
 
@@ -44,7 +44,6 @@ namespace TrainBSM_v2.AppAppearance
         {
             InitializeComponent();
             InitializeGauges(locomotive);
-            InitializeNumeralCounters(locomotive);
             _logger.MainGrid.Background = new SolidColorBrush(Colors.Bisque);
             PanelContent.Content = _logger;
 
@@ -54,50 +53,37 @@ namespace TrainBSM_v2.AppAppearance
             _timer.Start();
         }
 
+        private void _DebugRandomGenerator(IGaugeControl gauge)
+        {
+            if (gauge == null) return;
+            gauge.Update(gauge.MinValue + _rnd.NextDouble() * (gauge.MaxValue - gauge.MinValue));
+        }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
-            foreach (var item in _gauges.Values)
-            {
-                item.Update(_rnd.Next((int)item.Min, (int)item.Max));
+            foreach (IGaugeControl gauge in _gauges) {
+                _DebugRandomGenerator(gauge);
             }
 
-            LoadAtCurrentSpeed.Update(_rnd.NextDouble() * (LoadAtCurrentSpeed.MaxValue - LoadAtCurrentSpeed.MinValue));
-            FuelRackPosition.Update(_rnd.NextDouble() * (FuelRackPosition.MaxValue - FuelRackPosition.MinValue));
-            EngineRpm.Update(EngineRpm.MinValue + _rnd.NextDouble() * (EngineRpm.MaxValue - EngineRpm.MinValue));
-
-            totalHoursCounter.Add(counter++);
-            totalFuelCounter.Add(counter += 5);
-
-            CheckAllGaugesForErrors();
+            foreach (ICounterControl counter in _counters)
+            {
+                counter.Add((ulong)_rnd.Next(0, 2000));
+            }
         }
 
         private void InitializeGauges(DieselLocomotive locomotive)
         {
+            _gauges.Add(LoadAtCurrentSpeed);
+            _gauges.Add(EngineRpm);
+            _gauges.Add(FuelRackPosition);
+            _gauges.Add(IntakeManifoldPressure);
+            _gauges.Add(OilPressure);
+            _gauges.Add(OilTemperature);
+            _gauges.Add(CoolantTemperature);
+            _gauges.Add(IntakeAirTemperature);
 
-            _gauges[IntakeManifoldPressure] = new Gauge(locomotive.EngineAnalog.IntakeManifoldPressure, 0, 270, IntakeManifoldPressure);
-            IntakeManifoldPressure.Unit = locomotive.EngineAnalog.IntakeManifoldPressure.unitOfMeasurement ?? "";
-
-            _gauges[IntakeAirTemperature] = new Gauge(locomotive.EngineAnalog.IntakeAirTemperature, 0, 270, 
-                IntakeAirTemperature, Thresholds.GetIntakeAirTemperatureStatus);
-            IntakeAirTemperature.Unit = locomotive.EngineAnalog.IntakeAirTemperature.unitOfMeasurement ?? "";
-
-            _gauges[CoolantTemperature] = new Gauge(locomotive.EngineAnalog.CoolantTemperature, 0, 270, 
-                CoolantTemperature, Thresholds.GetCoolantTemperatureStatus);
-            CoolantTemperature.Unit = locomotive.EngineAnalog.CoolantTemperature.unitOfMeasurement ?? "";
-
-            _gauges[OilTemperature] = new Gauge(locomotive.EngineAnalog.OilTemperature, 0, 270, 
-                OilTemperature, Thresholds.GetOilTemperatureStatus);
-            OilTemperature.Unit = locomotive.EngineAnalog.OilTemperature.unitOfMeasurement ?? "";
-
-            _gauges[OilPressure] = new Gauge(locomotive.EngineAnalog.OilPressure, 0, 270, 
-                OilPressure, Thresholds.GetOilPressureStatus);
-            OilPressure.Unit = locomotive.EngineAnalog.OilPressure.unitOfMeasurement ?? "";
-        }
-
-        private void InitializeNumeralCounters(DieselLocomotive locomotive)
-        {
-            totalHoursCounter = new NumeralCounterEngineUL(locomotive.EngineAnalog.TotalHours, HoursCounter);
-            totalFuelCounter = new NumeralCounterEngineUL(locomotive.EngineAnalog.TotalFuel, FuelCounter);
+            _counters.Add(TotalHours);
+            _counters.Add(TotalFuel);
         }
 
         private void ShowMenu()

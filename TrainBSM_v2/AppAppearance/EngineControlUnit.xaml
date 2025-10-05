@@ -5,66 +5,118 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local_controls="clr-namespace:TrainBSM_v2.AppAppearance.Controls"
              xmlns:new_controls="clr-namespace:TrainBSM_v2.AppAppearance.NewControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="555" d:DesignWidth="784">
+             mc:Ignorable="d" d:DesignHeight="571" d:DesignWidth="784">
     <Grid>
         <Grid x:Name="MainGrid" Background="#FFE8E8E8" Margin="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="80"/>
+                <RowDefinition Height="110"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
 
-            <new_controls:SimpleGauge Grid.Row="0" Grid.Column="0" x:Name="LoadAtCurrentSpeed" 
-                                      SensorName="Нагрузка при текущем напряжении" Value="0.0" MinValue="0" MaxValue="10" 
-                                      MajorTicks="11" MinorTicks="3" RedZoneLow="2" YellowZoneLow="4" RedZoneHigh="9" 
-                                      YellowZoneHigh="8" Margin="10" IsSignVisible="True" ValueFontSize="14"/>
-            <new_controls:ColumnGauge x:Name="FuelRackPosition" Grid.Row="0" Grid.Column="1" Margin="10" Width="60" Height="200"
-                                      MinValue="0" MaxValue="100" MajorTicks="3" MinorTicks="1" YellowZoneLow="30" RedZoneLow="10"
-                                      RedZoneHigh="90" YellowZoneHigh="75"
-                                      HorizontalAlignment="Center" VerticalAlignment="Center" LabelSide="Left"/>
-            <new_controls:SquareGauge x:Name="EngineRpm" Grid.Row="0" Grid.Column="2"
-                              Value="100" 
-                              HorizontalAlignment="Stretch" 
-                              VerticalAlignment="Stretch"
-                              MinValue="-100"
-                              MaxValue="100"
-                              YellowZoneLow="-50" YellowZoneHigh="60"
-                              RedZoneLow="-70" RedZoneHigh="80"
-                              SensorName="Топливо %" IsSignVisible="True"
-                              ValueFontSize="12" LableFontSize="8"
-                              MajorTicks="11"
-                              MinorTicks="3"
-                              Margin="10"/>
-            <local_controls:GaugeControl x:Name="IntakeManifoldPressure" Grid.Row="0" Grid.Column="3" Margin="10"/>
-            <local_controls:GaugeControl x:Name="IntakeAirTemperature" Grid.Row="1" Grid.Column="0" Margin="10"/>
-            <local_controls:GaugeControl x:Name="CoolantTemperature" Grid.Row="1" Grid.Column="1" Margin="10"/>
-            <local_controls:GaugeControl x:Name="OilTemperature" Grid.Row="1" Grid.Column="2" Margin="10"/>
-            <local_controls:GaugeControl x:Name="OilPressure" Grid.Row="1" Grid.Column="3" Margin="10"/>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="270"/>
+                </Grid.ColumnDefinitions>
 
-            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
-                    Background="LightBlue"  
-                    CornerRadius="5" Padding="5">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="Общий пробег, ч" FontSize="12"/>
-                    <local_controls:RollingCounter x:Name="HoursCounter" ResetIfOverflow="True"/>
-                </StackPanel>
-            </Border>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="220"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-            <Border Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" 
-                    Background="LightGreen" 
-                    CornerRadius="5" Padding="5">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="Общее использование топлива, л" FontSize="12"/>
-                    <local_controls:RollingCounter x:Name="FuelCounter" ResetIfOverflow="True"/>
-                </StackPanel>
-            </Border>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <new_controls:SquareGauge x:Name="LoadAtCurrentSpeed" Grid.Column="0" VerticalAlignment="Top" 
+                                                  SensorName="Нагрузка на текущих оборотах, %"
+                                                  SensorNameFontSize="10" LableFontSize="8" 
+                                                  MaxValue="125" MinValue="-125" Value="0" IsSignVisible="True"/>
+                        <new_controls:SquareGauge x:Name="FuelRackPosition" Grid.Column="1" VerticalAlignment="Top" 
+                                                  SensorName="Положение рейки ТНВД, %" LableFontSize="8" 
+                                                  MaxValue="100" MinValue="0" Value="50" IsSignVisible="True"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+
+                        <new_controls:SimpleGauge x:Name="EngineRpm" Grid.Column="0" HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center" Margin="0,10,0,0" ValueFontSize="12"
+                                                  SensorNameFontSize="1" MinValue="0" MaxValue="2000" LableFontSize="7.7" 
+                                                  RedZoneLow="600" RedZoneHigh="1800" YellowZoneHigh="1600" IsSignVisible="True"/>
+                        <new_controls:SimpleGauge x:Name="IntakeManifoldPressure" Grid.Column="1" HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center" Margin="0,10,0,0" SensorNameFontSize="1"
+                                                  MinValue="0" MaxValue="5" MajorTicks="5" MinorTicks="9"/>
+                        <new_controls:SimpleGauge x:Name="OilPressure" Grid.Column="2" HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center" Margin="0,10,0,0" MinValue="0" MaxValue="20"
+                                                  MajorTicks="11" MinorTicks="9" YellowZoneLow="0.6" RedZoneLow="0.5"
+                                                  SensorNameFontSize="1" IsSignVisible="True"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Частота вращения коленчатого вала , об/мин" TextWrapping="Wrap"
+                                   VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center"
+                                   FontWeight="Bold" Foreground="#FF424242" Margin="0,2,0,0" FontSize="10"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="Давление воздуха во впускном коллекторе, кг/см²" TextWrapping="Wrap"
+                                   VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center"
+                                   FontWeight="Bold" Foreground="#FF424242" Margin="0,2,0,0" FontSize="10"/>
+                        <TextBlock Grid.Column="2" Grid.Row="1" Text="Давление масла, кг/см²" TextWrapping="Wrap"
+                                   VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center"
+                                   FontWeight="Bold" Foreground="#FF424242" Margin="0,2,0,0"/>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="1" Margin="0,0,24,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="70"/>
+                    </Grid.RowDefinitions>
+
+                    <new_controls:Thermometer x:Name="IntakeAirTemperature" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" 
+                                              Margin="0,0,0,0" VerticalAlignment="Bottom" MinValue="-40" MaxValue="100"
+                                              YellowZoneHigh="75" RedZoneHigh="95"/>
+                    <new_controls:Thermometer x:Name="CoolantTemperature" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" 
+                                              Margin="0,0,0,0" VerticalAlignment="Bottom" MinValue="0" MaxValue="120"
+                                              YellowZoneHigh="105" RedZoneHigh="110" RedZoneLow="8"/>
+                    <new_controls:Thermometer x:Name="OilTemperature" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" 
+                                              Margin="0,0,0,0" VerticalAlignment="Bottom" MinValue="0" MaxValue="120"
+                                              YellowZoneHigh="85" RedZoneHigh="90" RedZoneLow="8"/>
+
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Воздух во впускном коллекторе, °C" TextWrapping="Wrap"
+                               VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center"
+                               FontWeight="Bold" Foreground="#FF424242" Margin="0,5,0,0" FontSize="11"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="Охлаждающая жидкость, °C" TextWrapping="Wrap"
+                               VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center"
+                               FontWeight="Bold" Foreground="#FF424242" Margin="0,5,0,0" FontSize="11"/>
+                    <TextBlock Grid.Column="2" Grid.Row="1" Text="Температура масла, °C" TextWrapping="Wrap"
+                               VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center"
+                               FontWeight="Bold" Foreground="#FF424242" Margin="0,5,0,0"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <local_controls:RollingCounter x:Name="TotalHours" Grid.Column="0" Height="105" Width="365" 
+                                               HorizontalAlignment="Center" VerticalAlignment="Top" 
+                                               SensorName="Общий пробег, час"/>
+                <local_controls:RollingCounter x:Name="TotalFuel" Grid.Column="1" Height="105" Width="365" 
+                                               HorizontalAlignment="Center" VerticalAlignment="Top" 
+                                               SensorName="Общее использование топлива, л"/>
+            </Grid>
         </Grid>
 
         <Button x:Name="MenuToggleButton" Width="30" Height="100" BorderThickness="1" 

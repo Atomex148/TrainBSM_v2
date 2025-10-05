@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="TrainBSM_v2.AppAppearance.NewControls.Thermometer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="0"/>
+        </Grid.RowDefinitions>
+
+        <Viewbox Stretch="Uniform" Grid.Row="0">
+            <Grid Width="Auto" Height="Auto">
+                <Grid Panel.ZIndex="1" Width="60" Height="60" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,0">
+                    <Ellipse Stroke="#FF8B8B8B" StrokeThickness="3">
+                        <Ellipse.Fill>
+                            <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+                                <GradientStop Color="#FF6F6F6F" Offset="1"/>
+                                <GradientStop Color="#FF393939" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                    <Grid>
+                        <TextBlock x:Name="ValueText" Text="0.0" FontWeight="Bold" Foreground="LimeGreen" 
+                                   FontSize="{Binding ValueFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="0" Opacity="1"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Grid>
+                </Grid>
+
+
+                <Grid Width="30" Height="210" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,25">
+                    <Rectangle Stroke="#FF8B8B8B" StrokeThickness="3" RadiusX="15" RadiusY="15">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+                                <GradientStop Color="#FF6F6F6F" Offset="1"/>
+                                <GradientStop Color="#FF393939" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <Rectangle x:Name="FillRectangle" Margin="5,0,5,0"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Stretch"
+                               Height="50"
+                               Fill="Cyan"
+                               Stroke="Black"
+                               StrokeThickness="0.7"/>
+
+                    <Canvas x:Name="InnerCanvas" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="5,0,5,50"
+                            Height="150" Background="Transparent" Panel.ZIndex="5"/>
+                </Grid>
+            </Grid>
+        </Viewbox>
+
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0">
+            <TextBlock x:Name="NameText" Text="Sensor Name" 
+                       FontSize="{Binding SensorNameFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       FontWeight="Bold" Foreground="#FF424242"
+                       TextAlignment="Center" TextWrapping="Wrap" TextTrimming="None"
+                       MaxWidth="{Binding ActualWidth, ElementName=MainGrid}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+    </Grid>
+</UserControl>

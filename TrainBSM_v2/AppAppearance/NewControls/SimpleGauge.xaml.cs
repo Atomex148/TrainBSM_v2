@@ -18,7 +18,7 @@ using TrainBSM_v2.AppAppearance.Controls;
 
 namespace TrainBSM_v2.AppAppearance.NewControls
 {
-    public partial class SimpleGauge : UserControl, IBaseControl
+    public partial class SimpleGauge : UserControl, IGaugeControl
     {
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
             nameof(Value), typeof(double), typeof(SimpleGauge), new PropertyMetadata(0.0, OnValueChanged));
@@ -48,13 +48,20 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             (nameof(MinorTicks), typeof(int), typeof(SimpleGauge), new PropertyMetadata(3, OnRangeChanged));
 
         public static readonly DependencyProperty SensorNameProperty = DependencyProperty.Register(
-            nameof(SensorName), typeof(string), typeof(SimpleGauge), new PropertyMetadata("", OnRangeChanged));
+            nameof(SensorName), typeof(string), typeof(SimpleGauge), new PropertyMetadata("", OnSensorNameChanged));
 
         public static readonly DependencyProperty SignVisibilityProperty = DependencyProperty.Register(
             nameof(IsSignVisible), typeof(bool), typeof(SimpleGauge), new PropertyMetadata(false, OnSignVisibilityChanged));
 
         public static readonly DependencyProperty ValueFontSizeProperty = DependencyProperty.Register(
             nameof(ValueFontSize), typeof(double), typeof(SimpleGauge), new PropertyMetadata(16.0, OnValueFontSizeChanged));
+
+        public static readonly DependencyProperty LableFontSizeProperty = DependencyProperty.Register(
+            nameof(LableFontSize), typeof(double), typeof(SimpleGauge), new PropertyMetadata(9.0, OnRangeChanged));
+
+        public static readonly DependencyProperty SensorNameFontSizeProperty = DependencyProperty.Register(
+            nameof(SensorNameFontSize), typeof(double), typeof(SimpleGauge), new PropertyMetadata(12.0));
+
 
         public double Value { get => (double)GetValue(ValueProperty); set => SetValue(ValueProperty, value); }
         public double MinValue { get => (double)GetValue(MinValueProperty); set => SetValue(MinValueProperty, value); }
@@ -65,6 +72,8 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         public double? RedZoneHigh { get => (double?)GetValue(RedZoneHighProperty); set => SetValue(RedZoneHighProperty, value); }
         public bool IsSignVisible { get => (bool)GetValue(SignVisibilityProperty); set => SetValue(SignVisibilityProperty, value); }
         public double ValueFontSize { get => (double)GetValue(ValueFontSizeProperty); set => SetValue(ValueFontSizeProperty, value); }
+        public double LableFontSize { get => (double)GetValue(LableFontSizeProperty); set => SetValue(LableFontSizeProperty, value); }
+        public double SensorNameFontSize { get => (double)GetValue(SensorNameFontSizeProperty); set => SetValue(SensorNameFontSizeProperty, value); }
 
         public int MajorTicks { get => (int)GetValue(MajorTicksProperty); set => SetValue(MajorTicksProperty, value); }
         public int MinorTicks { get => (int)GetValue(MinorTicksProperty); set => SetValue(MinorTicksProperty, value); }
@@ -115,6 +124,12 @@ namespace TrainBSM_v2.AppAppearance.NewControls
                 gauge._DrawLabels();
                 gauge._DrawSegments();
             }
+        }
+
+        private static void OnSensorNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var gauge = (SimpleGauge)d;
+            gauge.NameText.Text = (string)e.NewValue;
         }
 
         private static void OnZoneChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -257,7 +272,8 @@ namespace TrainBSM_v2.AppAppearance.NewControls
                 {
                     Text = value.ToString("F0"),
                     Foreground = new SolidColorBrush(Color.FromRgb(0xD4, 0xD4, 0xD4)),
-                    FontSize = 10
+                    FontSize = LableFontSize,
+                    FontWeight = FontWeights.Bold
                 };
                 label.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
                 Canvas.SetLeft(label, x - label.DesiredSize.Width / 2);

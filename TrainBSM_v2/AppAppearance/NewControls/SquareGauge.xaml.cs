@@ -8,7 +8,7 @@ using TrainBSM_v2.AppAppearance.Controls;
 
 namespace TrainBSM_v2.AppAppearance.NewControls
 {
-    public partial class SquareGauge : UserControl, IBaseControl
+    public partial class SquareGauge : UserControl, IGaugeControl
     {
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
             nameof(Value), typeof(double), typeof(SquareGauge), new PropertyMetadata(0.0, OnValueChanged));
@@ -46,6 +46,9 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         public static readonly DependencyProperty LableFontSizeProperty = DependencyProperty.Register(
             nameof(LableFontSize), typeof(double), typeof(SquareGauge), new PropertyMetadata(9.0, OnRangeChanged));
 
+        public static readonly DependencyProperty SensorNameFontSizeProperty = DependencyProperty.Register(
+            nameof(SensorNameFontSize), typeof(double), typeof(SquareGauge), new PropertyMetadata(12.0));
+
         public static readonly DependencyProperty SignVisibilityProperty = DependencyProperty.Register(
             nameof(IsSignVisible), typeof(bool), typeof(SquareGauge), new PropertyMetadata(false, OnSignVisibilityChanged));
 
@@ -61,6 +64,7 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         public string SensorName { get => (string)GetValue(SensorNameProperty); set => SetValue(SensorNameProperty, value); }
         public double ValueFontSize { get => (double)GetValue(ValueFontSizeProperty); set => SetValue(ValueFontSizeProperty, value); }
         public double LableFontSize { get => (double)GetValue(LableFontSizeProperty); set => SetValue(LableFontSizeProperty, value); }
+        public double SensorNameFontSize { get => (double)GetValue(SensorNameFontSizeProperty); set => SetValue(SensorNameFontSizeProperty, value); }
         public bool IsSignVisible { get => (bool)GetValue(SignVisibilityProperty); set => SetValue(SignVisibilityProperty, value); }
 
         private const double _minAngle = 180;

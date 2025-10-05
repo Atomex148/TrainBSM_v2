@@ -5,16 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TrainBSM_v2.AppAppearance.NewControls"
              mc:Ignorable="d">
-    <Viewbox Stretch="Uniform">
-        <Grid x:Name="MainGrid" Width="150" Height="180">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid Width="150" Height="150" Grid.Row="0">
-                <!-- Фон -->
-                <Ellipse x:Name="OuterDial" Width="150" Height="150" Stroke="#FF8B8B8B"
-                 StrokeThickness="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Viewbox Stretch="Uniform" Grid.Row="0">
+            <Grid Width="150" Height="150">
+                <Ellipse x:Name="OuterDial" Width="150" Height="150" Stroke="#FF8B8B8B" StrokeThickness="3" 
+                         VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Ellipse.Fill>
                         <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
                             <GradientStop Color="#FF6F6F6F" Offset="1"/>
@@ -22,34 +22,26 @@
                         </LinearGradientBrush>
                     </Ellipse.Fill>
                 </Ellipse>
-                <!-- Деления и стрелки -->
-                <Canvas x:Name="MainCanvas" Width="150" Height="150" 
-                VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <!-- Зоны статуса -->
-                    <Canvas x:Name="ZoneSegmentsCanvas" />
-                    <!-- Деления -->
-                    <Canvas x:Name="TicksCanvas" />
-                    <!-- Цифры -->
-                    <Canvas x:Name="LabelsCanvas" />
+                
+                <Canvas x:Name="MainCanvas" Width="150" Height="150" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Canvas x:Name="ZoneSegmentsCanvas"/>
+                    <Canvas x:Name="TicksCanvas"/>
+                    <Canvas x:Name="LabelsCanvas"/>
                     <Path x:Name="Needle" Fill="Cyan" Stroke="Black" StrokeThickness="0.5">
                         <Path.Data>
                             <PathGeometry>
                                 <PathFigure StartPoint="75,75" IsClosed="True">
-                                    <LineSegment Point="72,75" />
-                                    <LineSegment Point="75,125" />
-                                    <LineSegment Point="78,75" />
+                                    <LineSegment Point="72,75"/>
+                                    <LineSegment Point="75,125"/>
+                                    <LineSegment Point="78,75"/>
                                 </PathFigure>
                             </PathGeometry>
                         </Path.Data>
                         <Path.RenderTransform>
-                            <RotateTransform x:Name="NeedleRotation"
-                         Angle="0"
-                         CenterX="75"
-                         CenterY="75"/>
+                            <RotateTransform x:Name="NeedleRotation" Angle="0" CenterX="75" CenterY="75"/>
                         </Path.RenderTransform>
                     </Path>
-                    <Ellipse Width="16" Height="16" StrokeThickness="0" 
-                     Canvas.Left="67" Canvas.Top="67">
+                    <Ellipse Width="16" Height="16" StrokeThickness="0" Canvas.Left="67" Canvas.Top="67">
                         <Ellipse.Fill>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FF404040" Offset="0"/>
@@ -59,15 +51,21 @@
                         </Ellipse.Fill>
                     </Ellipse>
                 </Canvas>
+
                 <Border x:Name="ValueSign" Margin="85,85,20,40" Background="Black" CornerRadius="3">
-                    <TextBlock x:Name="ValueText" Text="0.0" 
+                    <TextBlock x:Name="ValueText" Text="0.0" FontWeight="Bold" Foreground="LimeGreen"
                                FontSize="{Binding ValueFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                               FontWeight="Bold" Foreground="LimeGreen" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
             </Grid>
-            <TextBlock x:Name="NameText" Text="Sensor Name" FontSize="12" FontWeight="Bold" Foreground="#FF424242"
-                       HorizontalAlignment="Center" VerticalAlignment="Bottom" TextWrapping="Wrap" 
-                       TextAlignment="Center" Grid.Row="1" Margin="0,5,0,0"/>
+        </Viewbox>
+
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
+            <TextBlock x:Name="NameText" Text="" 
+                       FontSize="{Binding SensorNameFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       FontWeight="Bold" Foreground="#FF424242" 
+                       TextAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
+                       Width="{Binding ActualWidth, ElementName=MainGrid}"/>
         </Grid>
-    </Viewbox>
+    </Grid>
 </UserControl>
