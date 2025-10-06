@@ -5,12 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
     <Grid x:Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto" MinHeight="0"/>
-        </Grid.RowDefinitions>
-
-        <Viewbox Stretch="Uniform" Grid.Row="0">
+        <Viewbox Stretch="Uniform">
             <Grid Width="Auto" Height="Auto">
                 <Grid Panel.ZIndex="1" Width="60" Height="60" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,0">
                     <Ellipse Stroke="#FF8B8B8B" StrokeThickness="3">
@@ -32,7 +27,6 @@
                         </TextBlock>
                     </Grid>
                 </Grid>
-
 
                 <Grid Width="30" Height="210" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,25">
                     <Rectangle Stroke="#FF8B8B8B" StrokeThickness="3" RadiusX="15" RadiusY="15">
@@ -57,23 +51,5 @@
                 </Grid>
             </Grid>
         </Viewbox>
-
-        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0">
-            <TextBlock x:Name="NameText" Text="Sensor Name" 
-                       FontSize="{Binding SensorNameFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       FontWeight="Bold" Foreground="#FF424242"
-                       TextAlignment="Center" TextWrapping="Wrap" TextTrimming="None"
-                       MaxWidth="{Binding ActualWidth, ElementName=MainGrid}">
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                        <Style.Triggers>
-                            <Trigger Property="Text" Value="">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-        </Grid>
     </Grid>
 </UserControl>

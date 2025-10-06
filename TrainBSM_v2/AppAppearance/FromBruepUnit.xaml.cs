@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using TrainBSM_v2.AppAppearance.Controls;
+using TrainBSM_v2.AppAppearance.NewControls;
 
 namespace TrainBSM_v2.AppAppearance
 {
@@ -48,7 +49,8 @@ namespace TrainBSM_v2.AppAppearance
     }
     public partial class FromBruepUnit : UserControl
     {
-        private Dictionary<GaugeControl, Gauge> _gauges = new();
+        private List<IGaugeControl> _gauges = new List<IGaugeControl>();
+        private List<ICounterControl> _counters = new List<ICounterControl>();
         private Dictionary<string, DiscreteIndicatorViewModel> _indicatorViewModels = new();
         private DieselLocomotive _locomotive;
         private Random _rnd = new Random();
@@ -67,11 +69,22 @@ namespace TrainBSM_v2.AppAppearance
             _timer.Start();
         }
 
+        private void _DebugRandomGenerator(IGaugeControl gauge)
+        {
+            if (gauge == null) return;
+            gauge.Update(gauge.MinValue + _rnd.NextDouble() * (gauge.MaxValue - gauge.MinValue));
+        }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
-            foreach (var item in _gauges.Values)
+            foreach (IGaugeControl gauge in _gauges)
             {
-                item.Update(_rnd.Next((int)item.Min, (int)item.Max));
+                _DebugRandomGenerator(gauge);
+            }
+
+            foreach (ICounterControl counter in _counters)
+            {
+                counter.Update((ulong)_rnd.NextInt64(0, 10000));
             }
 
             foreach (var item in _indicatorViewModels.Values)
@@ -83,20 +96,14 @@ namespace TrainBSM_v2.AppAppearance
 
         private void InitializeGauges(DieselLocomotive locomotive)
         {
-            _gauges[TEDGroup1Current] = new Gauge(locomotive.BRUEPAnalog.TEDGroup1Current, 0, 270, TEDGroup1Current,
-                Thresholds.GetTEDStatus);
-            TEDGroup1Current.Unit = locomotive.EngineAnalog.LoadAtCurrentSpeed.unitOfMeasurement ?? "";
-
-            _gauges[TEDGroup2Current] = new Gauge(locomotive.BRUEPAnalog.TEDGroup2Current, 0, 270, TEDGroup2Current,
-                Thresholds.GetTEDStatus);
-            TEDGroup2Current.Unit = locomotive.EngineAnalog.FuelRackPosition.unitOfMeasurement ?? "";
-
-            _gauges[TEDGroup3Current] = new Gauge(locomotive.BRUEPAnalog.TEDGroup3Current, 0, 270, TEDGroup3Current,
-                Thresholds.GetTEDStatus);
-            TEDGroup3Current.Unit = locomotive.EngineAnalog.EngineRpm.unitOfMeasurement ?? "";
-
-            _gauges[ControllerPosition] = new Gauge(locomotive.BRUEPAnalog.ControllerPosition, 0, 270, ControllerPosition);
-            ControllerPosition.Unit = locomotive.EngineAnalog.IntakeManifoldPressure.unitOfMeasurement ?? "";
+            _gauges.Add(TEDGroup1Current);
+            _gauges.Add(TEDGroup2Current);
+            _gauges.Add(TEDGroup3Current);
+            _gauges.Add(ControllerPosition);
+            
+            _counters.Add(GeneratorExcitationTractionVoltage);
+            _counters.Add(GeneratorExcitationCurrentVoltage);
+            _counters.Add(GeneratorVoltage);
         }
 
         private void InitializeDiscreteIndicators(DieselLocomotive locomotive)

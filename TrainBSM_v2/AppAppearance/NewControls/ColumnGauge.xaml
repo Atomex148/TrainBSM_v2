@@ -5,10 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Width="80" Height="230">
     <Grid x:Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" MinHeight="0" />
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
@@ -20,7 +16,7 @@
         <Canvas x:Name="LabelsCanvasRight" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2"
                 Height="{Binding ActualHeight, ElementName=InnerGrid, Mode=OneWay}"/>
 
-        <Border Grid.Row="0" Grid.Column="1" CornerRadius="4" BorderThickness="2" BorderBrush="#8B8B8B" Margin="0">
+        <Border Grid.Column="1" CornerRadius="4" BorderThickness="2" BorderBrush="#8B8B8B" Margin="0">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
                     <GradientStop Color="#393939" Offset="0"/>
@@ -48,13 +44,5 @@
                 <Canvas x:Name="GlassCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
         </Border>
-
-        <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="2,5,2,0" VerticalAlignment="Top">
-            <TextBlock x:Name="NameText" Text="Sensor" 
-                       FontSize="{Binding SensorNameFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       FontWeight="Bold" Foreground="#FF424242" 
-                       TextAlignment="Center" TextWrapping="Wrap" TextTrimming="None"
-                       Width="{Binding ActualWidth, ElementName=MainGrid}"/>
-        </Grid>
     </Grid>
 </UserControl>

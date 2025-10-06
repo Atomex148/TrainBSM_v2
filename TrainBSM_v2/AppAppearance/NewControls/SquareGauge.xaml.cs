@@ -37,17 +37,11 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         public static readonly DependencyProperty MinorTicksProperty = DependencyProperty.Register
             (nameof(MinorTicks), typeof(int), typeof(SquareGauge), new PropertyMetadata(3, OnRangeChanged));
 
-        public static readonly DependencyProperty SensorNameProperty = DependencyProperty.Register(
-            nameof(SensorName), typeof(string), typeof(SquareGauge), new PropertyMetadata("", OnSensorNameChanged));
-
         public static readonly DependencyProperty ValueFontSizeProperty = DependencyProperty.Register(
             nameof(ValueFontSize), typeof(double), typeof(SquareGauge), new PropertyMetadata(14.0));
 
         public static readonly DependencyProperty LableFontSizeProperty = DependencyProperty.Register(
             nameof(LableFontSize), typeof(double), typeof(SquareGauge), new PropertyMetadata(9.0, OnRangeChanged));
-
-        public static readonly DependencyProperty SensorNameFontSizeProperty = DependencyProperty.Register(
-            nameof(SensorNameFontSize), typeof(double), typeof(SquareGauge), new PropertyMetadata(12.0));
 
         public static readonly DependencyProperty SignVisibilityProperty = DependencyProperty.Register(
             nameof(IsSignVisible), typeof(bool), typeof(SquareGauge), new PropertyMetadata(false, OnSignVisibilityChanged));
@@ -61,10 +55,8 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         public double? RedZoneHigh { get => (double?)GetValue(RedZoneHighProperty); set => SetValue(RedZoneHighProperty, value); }
         public int MajorTicks { get => (int)GetValue(MajorTicksProperty); set => SetValue(MajorTicksProperty, value); }
         public int MinorTicks { get => (int)GetValue(MinorTicksProperty); set => SetValue(MinorTicksProperty, value); }
-        public string SensorName { get => (string)GetValue(SensorNameProperty); set => SetValue(SensorNameProperty, value); }
         public double ValueFontSize { get => (double)GetValue(ValueFontSizeProperty); set => SetValue(ValueFontSizeProperty, value); }
         public double LableFontSize { get => (double)GetValue(LableFontSizeProperty); set => SetValue(LableFontSizeProperty, value); }
-        public double SensorNameFontSize { get => (double)GetValue(SensorNameFontSizeProperty); set => SetValue(SensorNameFontSizeProperty, value); }
         public bool IsSignVisible { get => (bool)GetValue(SignVisibilityProperty); set => SetValue(SignVisibilityProperty, value); }
 
         private const double _minAngle = 180;
@@ -119,12 +111,6 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             var gauge = (SquareGauge)d;
             if (gauge.IsLoaded)
                 gauge._DrawSegments();
-        }
-
-        private static void OnSensorNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var gauge = (SquareGauge)d;
-            gauge.NameText.Text = (string)e.NewValue;
         }
 
         private static void OnSignVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

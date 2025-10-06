@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using static TrainBSM_v2.AppAppearance.NewControls.ColumnGauge;
 
 namespace TrainBSM_v2.AppAppearance.NewControls
 {
@@ -37,14 +38,11 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         public static readonly DependencyProperty MinorTicksProperty = DependencyProperty.Register(
             nameof(MinorTicks), typeof(int), typeof(Thermometer), new PropertyMetadata(3, OnRangeChanged));
 
-        public static readonly DependencyProperty SensorNameProperty = DependencyProperty.Register(
-            nameof(SensorName), typeof(string), typeof(Thermometer), new PropertyMetadata("", OnSensorNameChanged));
-
         public static readonly DependencyProperty ValueFontSizeProperty = DependencyProperty.Register(
             nameof(ValueFontSize), typeof(double), typeof(Thermometer), new PropertyMetadata(14.0));
 
-        public static readonly DependencyProperty SensorNameFontSizeProperty = DependencyProperty.Register(
-            nameof(SensorNameFontSize), typeof(double), typeof(Thermometer), new PropertyMetadata(14.0));
+        public static readonly DependencyProperty LableFontSizeProperty = DependencyProperty.Register(
+            nameof(LableFontSize), typeof(double), typeof(Thermometer), new PropertyMetadata(7.0, OnRangeChanged));
 
         public static readonly DependencyProperty SignVisibilityProperty = DependencyProperty.Register(
             nameof(IsSignVisible), typeof(bool), typeof(Thermometer), new PropertyMetadata(true, OnSignVisibilityChanged));
@@ -58,9 +56,8 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         public double? RedZoneHigh { get => (double?)GetValue(RedZoneHighProperty); set => SetValue(RedZoneHighProperty, value); }
         public int MajorTicks { get => (int)GetValue(MajorTicksProperty); set => SetValue(MajorTicksProperty, value); }
         public int MinorTicks { get => (int)GetValue(MinorTicksProperty); set => SetValue(MinorTicksProperty, value); }
-        public string SensorName { get => (string)GetValue(SensorNameProperty); set => SetValue(SensorNameProperty, value); }
         public double ValueFontSize { get => (double)GetValue(ValueFontSizeProperty); set => SetValue(ValueFontSizeProperty, value); }
-        public double SensorNameFontSize { get => (double)GetValue(SensorNameFontSizeProperty); set => SetValue(SensorNameFontSizeProperty, value); }
+        public double LableFontSize { get => (double)GetValue(LableFontSizeProperty); set => SetValue(LableFontSizeProperty, value); }
         public bool IsSignVisible { get => (bool)GetValue(SignVisibilityProperty); set => SetValue(SignVisibilityProperty, value); }
 
         public Thermometer()
@@ -70,15 +67,15 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             {
                 _DrawZones();
                 _DrawTicks();
+                _DrawLabels();
                 _UpdateFill(false);
                 _UpdateValueSign(false);
-
-                NameText.Text = SensorName;
 
                 InnerCanvas.SizeChanged += (s2, e2) =>
                 {
                     _DrawZones();
                     _DrawTicks();
+                    _DrawLabels();
                     _UpdateFill(false);
                     _UpdateValueSign(false);
                 };
@@ -92,6 +89,7 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             {
                 thermometer._DrawZones();
                 thermometer._DrawTicks();
+                thermometer._DrawLabels();
                 thermometer._UpdateFill(false);
                 thermometer._UpdateValueSign(false);
             }
@@ -114,13 +112,6 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             var thermometer = (Thermometer)d;
             thermometer._UpdateFill(true);
             thermometer._UpdateValueSign(true);
-        }
-
-        private static void OnSensorNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var thermometer = (Thermometer)d;
-            if (thermometer.NameText != null)
-                thermometer.NameText.Text = (string)e.NewValue;
         }
 
         private static void OnSignVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -319,6 +310,45 @@ namespace TrainBSM_v2.AppAppearance.NewControls
                     double y = height * (1 - t);
                     _DrawTick(y, fromX, toX, 1, Brushes.White);
                 }
+            }
+        }
+
+        private void _DrawLabels()
+        {
+            if (InnerCanvas == null) return;
+
+            var toRemove = InnerCanvas.Children.OfType<TextBlock>().ToList();
+            foreach (var element in toRemove)
+            {
+                InnerCanvas.Children.Remove(element);
+            }
+
+            double height = InnerCanvas.ActualHeight;
+            if (height == 0) return;
+
+            double topPadding = 2;
+            double bottomPadding = 2;
+
+            for (int i = 0; i < MajorTicks; i++)
+            {
+                double t = (double)i / (MajorTicks - 1);
+                double y = bottomPadding + (height - topPadding - bottomPadding) * (1 - t);
+                double value = MinValue + t * (MaxValue - MinValue);
+
+                var label = new TextBlock
+                {
+                    Text = value.ToString("F0"),
+                    Foreground = Brushes.White,
+                    FontSize = LableFontSize,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+
+                label.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+
+                Canvas.SetLeft(label, InnerCanvas.ActualWidth / 2 - 2);
+                Canvas.SetTop(label, y - label.DesiredSize.Height / 2);
+                InnerCanvas.Children.Add(label);
             }
         }
 

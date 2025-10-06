@@ -6,85 +6,73 @@
              xmlns:local="clr-namespace:TrainBSM_v2.AppAppearance.NewControls"
              mc:Ignorable="d">
     <Viewbox Stretch="Uniform">
-        <Grid x:Name="MainGrid" Width="180" Height="170">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
-                <RowDefinition Height="Auto" MinHeight="0"/>
-            </Grid.RowDefinitions>
-            <Grid Width="180" Height="140" Grid.Row="0">
-                <!-- Фон -->
-                <Border x:Name="OuterFrame" Width="180" Height="140" 
-                        BorderBrush="#FF8B8B8B" BorderThickness="3" CornerRadius="5"
-                        VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
-                            <GradientStop Color="#FF6F6F6F" Offset="1"/>
-                            <GradientStop Color="#FF393939" Offset="0"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
+        <Grid x:Name="MainGrid" Width="180" Height="140">
+            <!-- Фон -->
+            <Border x:Name="OuterFrame" Width="180" Height="140" 
+                    BorderBrush="#FF8B8B8B" BorderThickness="3" CornerRadius="5"
+                    VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+                        <GradientStop Color="#FF6F6F6F" Offset="1"/>
+                        <GradientStop Color="#FF393939" Offset="0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <!-- Контент -->
+            <Grid Margin="10">
+                <!-- Шкала в виде полукруга -->
+                <Canvas x:Name="ScaleCanvas" Width="160" Height="120" 
+                        VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <!-- Зоны статуса -->
+                    <Canvas x:Name="ZoneSegmentsCanvas" />
+                    <!-- Деления -->
+                    <Canvas x:Name="TicksCanvas" />
+                    <!-- Цифры -->
+                    <Canvas x:Name="LabelsCanvas" />
+                </Canvas>
+
+                <!-- Индикатор стрелки -->
+                <Canvas Width="160" Height="120" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <Path x:Name="Needle" Fill="Cyan" Stroke="Black" StrokeThickness="0.5">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure StartPoint="80,80" IsClosed="True">
+                                    <LineSegment Point="77,80" />
+                                    <LineSegment Point="80,25" />
+                                    <LineSegment Point="83,80" />
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                        <Path.RenderTransform>
+                            <RotateTransform x:Name="NeedleRotation"
+                             Angle="0"
+                             CenterX="80"
+                             CenterY="80"/>
+                        </Path.RenderTransform>
+                    </Path>
+                    <!-- Центральная точка крепления стрелки -->
+                    <Ellipse Width="10" Height="10" StrokeThickness="0" 
+                             Canvas.Left="75" Canvas.Top="75">
+                        <Ellipse.Fill>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FF404040" Offset="0"/>
+                                <GradientStop Color="#FF727272" Offset="0.5"/>
+                                <GradientStop Color="#FF404040" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Canvas>
+
+                <!-- Значение -->
+                <Border x:Name="ValueSign" Background="Black" CornerRadius="3"
+                        Width="65" Height="22" VerticalAlignment="Bottom" Margin="0,0,0,5">
+                    <TextBlock x:Name="ValueText" Text="0.0" 
+                               FontSize="{Binding ValueFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                               FontWeight="Bold" Foreground="LimeGreen" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
-
-                <!-- Контент -->
-                <Grid Margin="10">
-                    <!-- Шкала в виде полукруга -->
-                    <Canvas x:Name="ScaleCanvas" Width="160" Height="120" 
-                            VerticalAlignment="Top" HorizontalAlignment="Center">
-                        <!-- Зоны статуса -->
-                        <Canvas x:Name="ZoneSegmentsCanvas" />
-                        <!-- Деления -->
-                        <Canvas x:Name="TicksCanvas" />
-                        <!-- Цифры -->
-                        <Canvas x:Name="LabelsCanvas" />
-                    </Canvas>
-
-                    <!-- Индикатор стрелки -->
-                    <Canvas Width="160" Height="120" VerticalAlignment="Top" HorizontalAlignment="Center">
-                        <Path x:Name="Needle" Fill="Cyan" Stroke="Black" StrokeThickness="0.5">
-                            <Path.Data>
-                                <PathGeometry>
-                                    <PathFigure StartPoint="80,80" IsClosed="True">
-                                        <LineSegment Point="77,80" />
-                                        <LineSegment Point="80,25" />
-                                        <LineSegment Point="83,80" />
-                                    </PathFigure>
-                                </PathGeometry>
-                            </Path.Data>
-                            <Path.RenderTransform>
-                                <RotateTransform x:Name="NeedleRotation"
-                                 Angle="0"
-                                 CenterX="80"
-                                 CenterY="80"/>
-                            </Path.RenderTransform>
-                        </Path>
-                        <!-- Центральная точка крепления стрелки -->
-                        <Ellipse Width="10" Height="10" StrokeThickness="0" 
-                                 Canvas.Left="75" Canvas.Top="75">
-                            <Ellipse.Fill>
-                                <RadialGradientBrush>
-                                    <GradientStop Color="#FF404040" Offset="0"/>
-                                    <GradientStop Color="#FF727272" Offset="0.5"/>
-                                    <GradientStop Color="#FF404040" Offset="1"/>
-                                </RadialGradientBrush>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                    </Canvas>
-
-                    <!-- Значение -->
-                    <Border x:Name="ValueSign" Background="Black" CornerRadius="3"
-                            Width="65" Height="22" VerticalAlignment="Bottom" Margin="0,0,0,5">
-                        <TextBlock x:Name="ValueText" Text="0.0" 
-                                   FontSize="{Binding ValueFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                                   FontWeight="Bold" Foreground="LimeGreen" 
-                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </Grid>
             </Grid>
-
-            <TextBlock x:Name="NameText" Text="" FontWeight="Bold"
-                       FontSize="{Binding SensorNameFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       Foreground="#FF424242" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                       TextWrapping="Wrap" TextTrimming="None" TextAlignment="Center" Grid.Row="1" 
-                       MaxWidth="180" Margin="0,2,0,0"/>
         </Grid>
     </Viewbox>
 </UserControl>

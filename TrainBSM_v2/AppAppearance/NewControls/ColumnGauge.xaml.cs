@@ -37,12 +37,6 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         public static readonly DependencyProperty MinorTicksProperty = DependencyProperty.Register(
             nameof(MinorTicks), typeof(int), typeof(ColumnGauge), new PropertyMetadata(3, OnRangeChanged));
 
-        public static readonly DependencyProperty SensorNameProperty = DependencyProperty.Register(
-            nameof(SensorName), typeof(string), typeof(ColumnGauge), new PropertyMetadata("", OnSensorNameChanged));
-
-        public static readonly DependencyProperty SensorNameFontSizeProperty = DependencyProperty.Register(
-            nameof(SensorNameFontSize), typeof(double), typeof(ColumnGauge), new PropertyMetadata(14.0));
-
         public enum LabelSides { Left, Right }
         public static readonly DependencyProperty LabelSideProperty = DependencyProperty.Register(
             nameof(LabelSide), typeof(LabelSides), typeof(ColumnGauge), new PropertyMetadata(LabelSides.Left, OnRangeChanged));
@@ -57,8 +51,6 @@ namespace TrainBSM_v2.AppAppearance.NewControls
 
         public int MajorTicks { get => (int)GetValue(MajorTicksProperty); set => SetValue(MajorTicksProperty, value); }
         public int MinorTicks { get => (int)GetValue(MinorTicksProperty); set => SetValue(MinorTicksProperty, value); }
-        public string SensorName { get => (string)GetValue(SensorNameProperty); set => SetValue(SensorNameProperty, value); }
-        public double SensorNameFontSize { get => (double)GetValue(SensorNameFontSizeProperty); set => SetValue(SensorNameFontSizeProperty, value); }
         public LabelSides LabelSide { get => (LabelSides)GetValue(LabelSideProperty); set => SetValue(LabelSideProperty, value); }
 
         public ColumnGauge()
@@ -109,12 +101,6 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         {
             var gauge = (ColumnGauge)d;
             gauge._UpdateFill(true);
-        }
-
-        private static void OnSensorNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var gauge = (ColumnGauge)d;
-            gauge.NameText.Text = (string)e.NewValue;
         }
 
         private void _UpdateFill(bool animate)

@@ -6,12 +6,7 @@
              xmlns:local="clr-namespace:TrainBSM_v2.AppAppearance.NewControls"
              mc:Ignorable="d">
     <Grid x:Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <Viewbox Stretch="Uniform" Grid.Row="0">
+        <Viewbox Stretch="Uniform">
             <Grid Width="150" Height="150">
                 <Ellipse x:Name="OuterDial" Width="150" Height="150" Stroke="#FF8B8B8B" StrokeThickness="3" 
                          VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -22,7 +17,7 @@
                         </LinearGradientBrush>
                     </Ellipse.Fill>
                 </Ellipse>
-                
+
                 <Canvas x:Name="MainCanvas" Width="150" Height="150" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Canvas x:Name="ZoneSegmentsCanvas"/>
                     <Canvas x:Name="TicksCanvas"/>
@@ -59,13 +54,5 @@
                 </Border>
             </Grid>
         </Viewbox>
-
-        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
-            <TextBlock x:Name="NameText" Text="" 
-                       FontSize="{Binding SensorNameFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       FontWeight="Bold" Foreground="#FF424242" 
-                       TextAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
-                       Width="{Binding ActualWidth, ElementName=MainGrid}"/>
-        </Grid>
     </Grid>
 </UserControl>
