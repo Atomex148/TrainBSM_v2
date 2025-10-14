@@ -8,14 +8,8 @@
     <Grid x:Name="MainGrid">
         <Viewbox Stretch="Uniform">
             <Grid Width="150" Height="150">
-                <Ellipse x:Name="OuterDial" Width="150" Height="150" Stroke="#FF8B8B8B" StrokeThickness="3" 
-                         VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Ellipse.Fill>
-                        <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
-                            <GradientStop Color="#FF6F6F6F" Offset="1"/>
-                            <GradientStop Color="#FF393939" Offset="0"/>
-                        </LinearGradientBrush>
-                    </Ellipse.Fill>
+                <Ellipse x:Name="OuterDial" Width="150" Height="150" Stroke="Black" StrokeThickness="3" 
+                         VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White">
                 </Ellipse>
 
                 <Canvas x:Name="MainCanvas" Width="150" Height="150" VerticalAlignment="Center" HorizontalAlignment="Center">

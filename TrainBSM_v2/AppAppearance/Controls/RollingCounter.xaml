@@ -8,28 +8,14 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Основний лічильник -->
-        <Border Grid.Row="0" CornerRadius="8" BorderThickness="3" BorderBrush="#FF8B8B8B" Padding="10,8">
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
-                    <GradientStop Color="#FF6F6F6F" Offset="1"/>
-                    <GradientStop Color="#FF393939" Offset="0"/>
-                </LinearGradientBrush>
-            </Border.Background>
-
-            <Border CornerRadius="5" BorderThickness="2" BorderBrush="#FF555555" Padding="8,5">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
-                        <GradientStop Color="#FF1F1F1F" Offset="0"/>
-                        <GradientStop Color="#FF2F2F2F" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-
+        <Border Grid.Row="0" CornerRadius="8" BorderThickness="2" BorderBrush="Black" Padding="10,10"
+                Background="White">
+            <Border CornerRadius="5" BorderThickness="1.5" BorderBrush="#FFD0D0D0" Padding="8,7"
+                    Background="White">
                 <StackPanel x:Name="DigitPanel" Orientation="Horizontal" HorizontalAlignment="Center"/>
             </Border>
         </Border>
-
-        <!-- Назва сенсора -->
+        
         <TextBlock x:Name="NameText" Text="Counter" Grid.Row="1"
                    FontSize="11" FontWeight="Bold" Foreground="#FF424242"
                    HorizontalAlignment="Center" VerticalAlignment="Top" 

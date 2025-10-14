@@ -65,8 +65,8 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         private const double _centerY = 80;
         private const double _tickRadius = 75;
         private const double _labelRadius = 58;
-        private const double _segmentRadius = 40;
-        private const double _segmentThickness = 8;
+        private const double _segmentRadius = 74;
+        private const double _segmentThickness = 3;
 
         public SquareGauge()
         {
@@ -147,6 +147,19 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             }
         }
 
+        private Color _GetZoneColor(double value)
+        {
+            if ((RedZoneLow.HasValue && value < RedZoneLow.Value) ||
+                (RedZoneHigh.HasValue && value > RedZoneHigh.Value))
+                return Colors.Red;
+
+            if ((YellowZoneLow.HasValue && value < YellowZoneLow.Value) ||
+                (YellowZoneHigh.HasValue && value > YellowZoneHigh.Value))
+                return Colors.Goldenrod;
+
+            return Colors.DarkGreen;
+        }
+
         private Color _GetStateColor()
         {
             if ((RedZoneLow.HasValue && Value < RedZoneLow.Value) ||
@@ -155,7 +168,7 @@ namespace TrainBSM_v2.AppAppearance.NewControls
 
             if ((YellowZoneLow.HasValue && Value < YellowZoneLow.Value) ||
                 (YellowZoneHigh.HasValue && Value > YellowZoneHigh.Value))
-                return Colors.Yellow;
+                return Colors.Goldenrod;
 
             return Colors.Transparent;
         }
@@ -168,7 +181,7 @@ namespace TrainBSM_v2.AppAppearance.NewControls
 
         private void _UpdateNeedleColor(bool animate)
         {
-            Color color = _GetStateColor(defaultColor: Colors.Cyan);
+            Color color = _GetStateColor(defaultColor: Colors.DarkGreen);
 
             Color currentColor = Colors.Transparent;
             if (Needle.Fill is SolidColorBrush brush)
@@ -213,7 +226,9 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             for (int i = 0; i < MajorTicks; i++)
             {
                 double angle = _minAngle - i * totalAngle / (MajorTicks - 1);
-                _DrawTick(angle, 8, 2, Brushes.White);
+                double value = MinValue + i * (MaxValue - MinValue) / (MajorTicks - 1);
+                var brush = new SolidColorBrush(_GetZoneColor(value));
+                _DrawTick(angle, 8, 2, brush);
             }
 
             if (MinorTicks > 0)
@@ -223,7 +238,9 @@ namespace TrainBSM_v2.AppAppearance.NewControls
                 {
                     if (i % (MinorTicks + 1) == 0) continue;
                     double angle = _minAngle - i * totalAngle / (totalTicks - 1);
-                    _DrawTick(angle, 4, 1, Brushes.White);
+                    double value = MinValue + i * (MaxValue - MinValue) / (totalTicks - 1);
+                    var brush = new SolidColorBrush(_GetZoneColor(value));
+                    _DrawTick(angle, 5, 1, brush);
                 }
             }
         }
@@ -238,11 +255,12 @@ namespace TrainBSM_v2.AppAppearance.NewControls
                 double rad = angle * Math.PI / 180;
                 double x = _centerX + _labelRadius * Math.Cos(rad);
                 double y = _centerY + _labelRadius * Math.Sin(rad);
+                var brush = new SolidColorBrush(_GetZoneColor(value));
 
                 var label = new TextBlock
                 {
                     Text = value.ToString("F0"),
-                    Foreground = new SolidColorBrush(Color.FromRgb(0xD4, 0xD4, 0xD4)),
+                    Foreground = brush,
                     FontSize = LableFontSize,
                     FontWeight = FontWeights.Bold
                 };
@@ -298,28 +316,46 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         private void _DrawSegments()
         {
             ZoneSegmentsCanvas.Children.Clear();
-
             if (RedZoneLow.HasValue)
             {
                 _DrawSegment(MinValue, RedZoneLow.Value, Colors.Red);
-                if (YellowZoneLow.HasValue)
-                    _DrawSegment(RedZoneLow.Value, YellowZoneLow.Value, Colors.Yellow);
+                if (YellowZoneLow.HasValue) _DrawSegment(RedZoneLow.Value, YellowZoneLow.Value, Colors.Goldenrod);
             }
             else if (YellowZoneLow.HasValue)
             {
-                _DrawSegment(MinValue, YellowZoneLow.Value, Colors.Yellow);
+                _DrawSegment(MinValue, YellowZoneLow.Value, Colors.Goldenrod);
             }
 
             if (RedZoneHigh.HasValue)
             {
-                if (YellowZoneHigh.HasValue)
-                    _DrawSegment(YellowZoneHigh.Value, RedZoneHigh.Value, Colors.Yellow);
+                if (YellowZoneHigh.HasValue) _DrawSegment(YellowZoneHigh.Value, RedZoneHigh.Value, Colors.Goldenrod);
                 _DrawSegment(RedZoneHigh.Value, MaxValue, Colors.Red);
             }
             else if (YellowZoneHigh.HasValue)
             {
-                _DrawSegment(YellowZoneHigh.Value, MaxValue, Colors.Yellow);
+                _DrawSegment(YellowZoneHigh.Value, MaxValue, Colors.Goldenrod);
             }
+
+            double greenStartValue = MinValue, greenEndValue = MaxValue;
+            if (YellowZoneLow.HasValue)
+            {
+                greenStartValue = YellowZoneLow.Value;
+            }
+            else if (RedZoneLow.HasValue)
+            {
+                greenStartValue = RedZoneLow.Value;
+            }
+
+            if (YellowZoneHigh.HasValue)
+            {
+                greenEndValue = YellowZoneHigh.Value;
+            }
+            else if (RedZoneHigh.HasValue)
+            {
+                greenEndValue = RedZoneHigh.Value;
+            }
+
+            _DrawSegment(greenStartValue, greenEndValue, Colors.DarkGreen);
         }
 
         private void _UpdateValueSign(bool animate)

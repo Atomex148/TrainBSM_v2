@@ -123,6 +123,39 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             }
         }
 
+        private Color _GetZoneColor(double value)
+        {
+            if ((RedZoneLow.HasValue && value < RedZoneLow.Value) ||
+                (RedZoneHigh.HasValue && value > RedZoneHigh.Value))
+                return Colors.Red;
+
+            if ((YellowZoneLow.HasValue && value < YellowZoneLow.Value) ||
+                (YellowZoneHigh.HasValue && value > YellowZoneHigh.Value))
+                return Colors.Goldenrod;
+
+            return Colors.DarkGreen;
+        }
+
+        private Color _GetStateColor()
+        {
+            if ((RedZoneLow.HasValue && Value < RedZoneLow.Value) ||
+                (RedZoneHigh.HasValue && Value > RedZoneHigh.Value))
+                return Color.FromRgb(235, 120, 120);
+
+            if ((YellowZoneLow.HasValue && Value < YellowZoneLow.Value) ||
+                (YellowZoneHigh.HasValue && Value > YellowZoneHigh.Value))
+                return Color.FromRgb(235, 200, 100);
+
+            return Colors.Transparent;
+        }
+
+        private Color _GetStateColor(Color defaultColor)
+        {
+            Color c = _GetStateColor();
+            return c == Colors.Transparent ? defaultColor : c;
+        }
+
+
         private void _UpdateFill(bool animate)
         {
             if (FillRectangle == null || InnerCanvas == null) return;
@@ -150,7 +183,7 @@ namespace TrainBSM_v2.AppAppearance.NewControls
                 FillRectangle.Height = targetHeight;
             }
 
-            Color targetColor = _GetStateColor(defaultColor: Colors.Green);
+            Color targetColor = _GetStateColor(defaultColor: Colors.MediumSeaGreen);
 
             if (FillRectangle.Fill is SolidColorBrush currentBrush && animate)
             {
@@ -169,25 +202,6 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             {
                 FillRectangle.Fill = new SolidColorBrush(targetColor);
             }
-        }
-
-        private Color _GetStateColor()
-        {
-            if ((RedZoneLow.HasValue && Value < RedZoneLow.Value) ||
-                (RedZoneHigh.HasValue && Value > RedZoneHigh.Value))
-                return Colors.Red;
-
-            if ((YellowZoneLow.HasValue && Value < YellowZoneLow.Value) ||
-                (YellowZoneHigh.HasValue && Value > YellowZoneHigh.Value))
-                return Color.FromRgb(200, 200, 0);
-
-            return Colors.Transparent;
-        }
-
-        private Color _GetStateColor(Color defaultColor)
-        {
-            Color c = _GetStateColor();
-            return c == Colors.Transparent ? defaultColor : c;
         }
 
         private void _DrawTick(double y, double fromX, double toX, double thickness, Brush brush)
@@ -246,34 +260,31 @@ namespace TrainBSM_v2.AppAppearance.NewControls
                 InnerCanvas.Children.Remove(element);
             }
 
-            bool hasRedLow = RedZoneLow.HasValue;
-            bool hasYellowLow = YellowZoneLow.HasValue;
-
-            if (hasRedLow)
+            if (RedZoneLow.HasValue)
             {
-                _DrawZoneRectangle(MinValue, RedZoneLow.Value, Colors.Red, 0.25, extraPixels: 20);
+                _DrawZoneRectangle(MinValue, RedZoneLow.Value, Colors.Red, 0.175, extraPixels: 20);
             }
 
-            if (hasYellowLow)
+            if (YellowZoneLow.HasValue)
             {
-                if (hasRedLow)
+                if (RedZoneLow.HasValue)
                 {
-                    _DrawZoneRectangle(RedZoneLow.Value, YellowZoneLow.Value, Colors.Yellow, 0.25);
+                    _DrawZoneRectangle(RedZoneLow.Value, YellowZoneLow.Value, Colors.Yellow, 0.175);
                 }
                 else
                 {
-                    _DrawZoneRectangle(MinValue, YellowZoneLow.Value, Colors.Yellow, 0.25, extraPixels: 20);
+                    _DrawZoneRectangle(MinValue, YellowZoneLow.Value, Colors.Yellow, 0.175, extraPixels: 20);
                 }
             }
 
             if (YellowZoneHigh.HasValue)
             {
                 double endValue = RedZoneHigh.HasValue ? RedZoneHigh.Value : MaxValue;
-                _DrawZoneRectangle(YellowZoneHigh.Value, endValue, Colors.Yellow, 0.25);
+                _DrawZoneRectangle(YellowZoneHigh.Value, endValue, Colors.Yellow, 0.175);
             }
 
             if (RedZoneHigh.HasValue)
-                _DrawZoneRectangle(RedZoneHigh.Value, MaxValue, Colors.Red, 0.25);
+                _DrawZoneRectangle(RedZoneHigh.Value, MaxValue, Colors.Red, 0.175);
         }
 
         private void _DrawTicks()
@@ -296,7 +307,11 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             {
                 double t = (double)i / (MajorTicks - 1);
                 double y = height * (1 - t);
-                _DrawTick(y, fromX, toX, 2, Brushes.White);
+
+                double value = MinValue + t * (MaxValue - MinValue);
+                var brush = new SolidColorBrush(_GetZoneColor(value));
+
+                _DrawTick(y, fromX, toX, 2, brush);
             }
 
             toX = 3;
@@ -308,7 +323,11 @@ namespace TrainBSM_v2.AppAppearance.NewControls
                     if (i % (MinorTicks + 1) == 0) continue;
                     double t = (double)i / (totalTicks - 1);
                     double y = height * (1 - t);
-                    _DrawTick(y, fromX, toX, 1, Brushes.White);
+
+                    double value = MinValue + t * (MaxValue - MinValue);
+                    var brush = new SolidColorBrush(_GetZoneColor(value));
+
+                    _DrawTick(y, fromX, toX, 1, brush);
                 }
             }
         }
@@ -335,11 +354,14 @@ namespace TrainBSM_v2.AppAppearance.NewControls
                 double y = bottomPadding + (height - topPadding - bottomPadding) * (1 - t);
                 double value = MinValue + t * (MaxValue - MinValue);
 
+                var color = _GetZoneColor(value);
+
                 var label = new TextBlock
                 {
                     Text = value.ToString("F0"),
-                    Foreground = Brushes.White,
+                    Foreground = new SolidColorBrush(color),
                     FontSize = LableFontSize,
+                    FontWeight = FontWeights.Bold,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Center
                 };

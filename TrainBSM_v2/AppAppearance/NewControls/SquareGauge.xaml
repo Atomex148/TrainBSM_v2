@@ -7,32 +7,19 @@
              mc:Ignorable="d">
     <Viewbox Stretch="Uniform">
         <Grid x:Name="MainGrid" Width="180" Height="140">
-            <!-- Фон -->
             <Border x:Name="OuterFrame" Width="180" Height="140" 
-                    BorderBrush="#FF8B8B8B" BorderThickness="3" CornerRadius="5"
-                    VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
-                        <GradientStop Color="#FF6F6F6F" Offset="1"/>
-                        <GradientStop Color="#FF393939" Offset="0"/>
-                    </LinearGradientBrush>
-                </Border.Background>
+                    BorderBrush="Black" BorderThickness="3" CornerRadius="5"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" Background="White">
             </Border>
 
-            <!-- Контент -->
             <Grid Margin="10">
-                <!-- Шкала в виде полукруга -->
                 <Canvas x:Name="ScaleCanvas" Width="160" Height="120" 
                         VerticalAlignment="Top" HorizontalAlignment="Center">
-                    <!-- Зоны статуса -->
                     <Canvas x:Name="ZoneSegmentsCanvas" />
-                    <!-- Деления -->
                     <Canvas x:Name="TicksCanvas" />
-                    <!-- Цифры -->
                     <Canvas x:Name="LabelsCanvas" />
                 </Canvas>
 
-                <!-- Индикатор стрелки -->
                 <Canvas Width="160" Height="120" VerticalAlignment="Top" HorizontalAlignment="Center">
                     <Path x:Name="Needle" Fill="Cyan" Stroke="Black" StrokeThickness="0.5">
                         <Path.Data>
@@ -51,7 +38,6 @@
                              CenterY="80"/>
                         </Path.RenderTransform>
                     </Path>
-                    <!-- Центральная точка крепления стрелки -->
                     <Ellipse Width="10" Height="10" StrokeThickness="0" 
                              Canvas.Left="75" Canvas.Top="75">
                         <Ellipse.Fill>
@@ -64,7 +50,6 @@
                     </Ellipse>
                 </Canvas>
 
-                <!-- Значение -->
                 <Border x:Name="ValueSign" Background="Black" CornerRadius="3"
                         Width="65" Height="22" VerticalAlignment="Bottom" Margin="0,0,0,5">
                     <TextBlock x:Name="ValueText" Text="0.0" 
