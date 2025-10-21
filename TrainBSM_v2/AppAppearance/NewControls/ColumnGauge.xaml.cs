@@ -265,7 +265,7 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             {
                 double t = (double)i / (MajorTicks - 1);
                 double y = bottomPadding + (height - topPadding - bottomPadding) * (1 - t);
-                _DrawTick(y, fromX, toX, 2, Brushes.White);
+                _DrawTick(y, fromX, toX, 2, Brushes.Black);
             }
 
             fromX = 1;
@@ -284,7 +284,7 @@ namespace TrainBSM_v2.AppAppearance.NewControls
                     if (i % (MinorTicks + 1) == 0) continue;
                     double t = (double)i / (totalTicks - 1);
                     double y = bottomPadding + (height - topPadding - bottomPadding) * (1 - t);
-                    _DrawTick(y, fromX, toX, 1, Brushes.White);
+                    _DrawTick(y, fromX, toX, 1, Brushes.Black);
                 }
             }
         }

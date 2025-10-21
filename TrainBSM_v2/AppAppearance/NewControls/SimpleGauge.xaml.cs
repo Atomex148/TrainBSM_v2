@@ -56,6 +56,9 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         public static readonly DependencyProperty LableFontSizeProperty = DependencyProperty.Register(
             nameof(LableFontSize), typeof(double), typeof(SimpleGauge), new PropertyMetadata(9.0, OnRangeChanged));
 
+        public static readonly DependencyProperty IsTicksMonolithProperty = DependencyProperty.Register(
+            nameof(IsTicksMonolith), typeof(bool), typeof(SimpleGauge), new PropertyMetadata(true, OnTickMonolithnessChanged));
+
         public double Value { get => (double)GetValue(ValueProperty); set => SetValue(ValueProperty, value); }
         public double MinValue { get => (double)GetValue(MinValueProperty); set => SetValue(MinValueProperty, value); }
         public double MaxValue { get => (double)GetValue(MaxValueProperty); set => SetValue(MaxValueProperty, value); }
@@ -66,6 +69,7 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         public bool IsSignVisible { get => (bool)GetValue(SignVisibilityProperty); set => SetValue(SignVisibilityProperty, value); }
         public double ValueFontSize { get => (double)GetValue(ValueFontSizeProperty); set => SetValue(ValueFontSizeProperty, value); }
         public double LableFontSize { get => (double)GetValue(LableFontSizeProperty); set => SetValue(LableFontSizeProperty, value); }
+        public bool IsTicksMonolith { get => (bool)GetValue(SignVisibilityProperty); set => SetValue(SignVisibilityProperty, value); }
 
         public int MajorTicks { get => (int)GetValue(MajorTicksProperty); set => SetValue(MajorTicksProperty, value); }
         public int MinorTicks { get => (int)GetValue(MinorTicksProperty); set => SetValue(MinorTicksProperty, value); }
@@ -74,7 +78,7 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         private const double _maxAngle = 260;
         private const double _centerX = 75;
         private const double _centerY = 75;
-        private const double _tickRadius = 65.5;
+        private double _tickRadius = 65.5;
         private const double _labelRadius = 48;
         private const double _segmentRadius = 65.5;
         private const double _segmentThickness = 2;
@@ -136,6 +140,15 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         {
             var gauge = (SimpleGauge)d;
             gauge.ValueText.FontSize = (double)e.NewValue;
+        }
+
+        private static void OnTickMonolithnessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var gauge = (SimpleGauge)d;
+            if (gauge.IsTicksMonolith)
+                gauge._tickRadius = 65.5;
+            else
+                gauge._tickRadius = 63.5;
         }
 
         private double _MapValueToAngle(double value)

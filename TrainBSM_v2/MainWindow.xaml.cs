@@ -19,6 +19,7 @@ namespace TrainBSM_v2
         private Logger _logger = new Logger();
         private EngineControlUnit _engineControlUnit;
         private FromBruepUnit _fromBruepUnit;
+        private FireFrame _fireFrame;
 
         public MainWindow()
         {
@@ -30,6 +31,7 @@ namespace TrainBSM_v2
 
             _engineControlUnit = new EngineControlUnit(_locomotive);
             _fromBruepUnit = new FromBruepUnit(_locomotive);
+            _fireFrame = new FireFrame(_locomotive);
 
             this.PreviewMouseLeftButtonDown += MainWindow_PreviewMouseLeftButtonDown;
 
@@ -147,6 +149,11 @@ namespace TrainBSM_v2
         private void ShowFromBRUEPUnit_Click(Object sender, RoutedEventArgs e)
         {
             MainContent.Content = _fromBruepUnit;
+        }
+
+        private void ShowFireFrame_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = _fireFrame;
         }
     }
 }

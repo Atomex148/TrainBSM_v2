@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="TrainBSM_v2.AppAppearance.FireFrame"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TrainBSM_v2.AppAppearance"
+             xmlns:new_controls="clr-namespace:TrainBSM_v2.AppAppearance.NewControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="571" d:DesignWidth="784">
+
+    <Grid x:Name="MainGrid" Background="#FFE8E8E8" Margin="8">
+        <Image Height="540" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="-270" 
+               Width="540" Opacity="0.15" Source="/AppAppearance/Assets/fire_emergency/fire_shield.png"/>
+        <Grid HorizontalAlignment="Left" Width="500">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <new_controls:DiscreteIndicator x:Name="fire_fire_v_cab_ind" 
+                                            Grid.Row="0" Margin="5" LabelMargin="30" LabelText="Пожар в кабине"
+                                            HorizontalAlignment="Left" VerticalAlignment="Center" UseImage="True" 
+                                            ActiveImageSource="/AppAppearance/Assets/fire_emergency/flame_on.png"
+                                            InactiveImageSource="/AppAppearance/Assets/fire_emergency/flame_off.png"/>
+
+            <new_controls:DiscreteIndicator x:Name="fire_fire_v_vvk_ind" 
+                                            Grid.Row="1" Margin="5" LabelMargin="30" LabelText="Пожар в ВВК"
+                                            HorizontalAlignment="Left" VerticalAlignment="Center" UseImage="True" 
+                                            ActiveImageSource="/AppAppearance/Assets/fire_emergency/flame_on.png"
+                                            InactiveImageSource="/AppAppearance/Assets/fire_emergency/flame_off.png"/>
+
+            <new_controls:DiscreteIndicator x:Name="fire_fire_v_kapote_privod_ind"
+                                            Grid.Row="2" Margin="5" LabelMargin="30" LabelText="Пожар в капоте вспомогательных приводов"
+                                            HorizontalAlignment="Left" VerticalAlignment="Center" UseImage="True" 
+                                            ActiveImageSource="/AppAppearance/Assets/fire_emergency/flame_on.png"
+                                            InactiveImageSource="/AppAppearance/Assets/fire_emergency/flame_off.png"/>
+
+            <new_controls:DiscreteIndicator x:Name="fire_fire_v_kapote_comp_ind"
+                                            Grid.Row="3" Margin="5" LabelMargin="30" LabelText="Пожар в капоте компрессора"
+                                            HorizontalAlignment="Left" VerticalAlignment="Center" UseImage="True" 
+                                            ActiveImageSource="/AppAppearance/Assets/fire_emergency/flame_on.png"
+                                            InactiveImageSource="/AppAppearance/Assets/fire_emergency/flame_off.png"/>
+
+            <new_controls:DiscreteIndicator x:Name="fire_fire_v_kapote_dis_ind"
+                                            Grid.Row="4" Margin="5" LabelMargin="30" LabelText="Пожар в капоте дизеля"
+                                            HorizontalAlignment="Left" VerticalAlignment="Center" UseImage="True" 
+                                            ActiveImageSource="/AppAppearance/Assets/fire_emergency/flame_on.png"
+                                            InactiveImageSource="/AppAppearance/Assets/fire_emergency/flame_off.png"/>
+
+            <new_controls:DiscreteIndicator x:Name="fire_flt_fire_loop_ind"
+                                            Grid.Row="5" Margin="5" LabelMargin="30" LabelText="Неисправность пожарного шлейфа"
+                                            HorizontalAlignment="Left" VerticalAlignment="Center" UseImage="True" 
+                                            ActiveImageSource="/AppAppearance/Assets/fire_emergency/flame_on.png"
+                                            InactiveImageSource="/AppAppearance/Assets/fire_emergency/flame_off.png"/>
+        </Grid>
+    </Grid>
+</UserControl>
