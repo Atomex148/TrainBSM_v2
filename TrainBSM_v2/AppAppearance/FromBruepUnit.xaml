@@ -6,7 +6,7 @@
              xmlns:local_controls="clr-namespace:TrainBSM_v2.AppAppearance.Controls"
              xmlns:new_controls="clr-namespace:TrainBSM_v2.AppAppearance.NewControls"
              mc:Ignorable="d" 
-             d:DesignHeight="555" d:DesignWidth="784">
+             d:DesignHeight="723" d:DesignWidth="1008">
     <Grid x:Name="MainGrid" Background="#FFE8E8E8" Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="350"/>
@@ -23,13 +23,13 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <local_controls:RollingCounter Grid.Column="0" x:Name="GeneratorVoltage" NumbersCount="4" 
+                <new_controls:RollingCounter Grid.Column="0" x:Name="GeneratorVoltage" NumbersCount="4" 
                                                HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,0,10"
                                                SensorName="Напряжение генератора"/>
-                <local_controls:RollingCounter Grid.Column="1" x:Name="GeneratorExcitationCurrentVoltage" NumbersCount="4"
+                <new_controls:RollingCounter Grid.Column="1" x:Name="GeneratorExcitationCurrentVoltage" NumbersCount="4"
                                                HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,0,10" 
                                                SensorName="Возбуждение (ток)"/>
-                <local_controls:RollingCounter Grid.Column="2" x:Name="GeneratorExcitationTractionVoltage" NumbersCount="4"
+                <new_controls:RollingCounter Grid.Column="2" x:Name="GeneratorExcitationTractionVoltage" NumbersCount="4"
                                                HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,0,10" 
                                                SensorName="Возбуждение (тяга)"/>
             </Grid>

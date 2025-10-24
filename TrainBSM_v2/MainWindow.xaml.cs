@@ -17,9 +17,11 @@ namespace TrainBSM_v2
         private DieselLocomotive _locomotive = new DieselLocomotive();
 
         private Logger _logger = new Logger();
-        private EngineControlUnit _engineControlUnit;
+        private EngineControlFrame _engineControlFrame;
         private FromBruepUnit _fromBruepUnit;
         private FireFrame _fireFrame;
+        private CoolingFrame _coolingFrame;
+        private TractionFrame _tractionFrame;
 
         public MainWindow()
         {
@@ -29,9 +31,11 @@ namespace TrainBSM_v2
             MainContent.Content = _logger;
             MainGrid.Background = _logger.LoggerBackground;
 
-            _engineControlUnit = new EngineControlUnit(_locomotive);
+            _engineControlFrame = new EngineControlFrame(_locomotive);
             _fromBruepUnit = new FromBruepUnit(_locomotive);
             _fireFrame = new FireFrame(_locomotive);
+            _coolingFrame = new CoolingFrame(_locomotive);
+            _tractionFrame = new TractionFrame(_locomotive);
 
             this.PreviewMouseLeftButtonDown += MainWindow_PreviewMouseLeftButtonDown;
 
@@ -143,7 +147,7 @@ namespace TrainBSM_v2
 
         private void ShowEngineControlUnit_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = _engineControlUnit;
+            MainContent.Content = _engineControlFrame;
         }
 
         private void ShowFromBRUEPUnit_Click(Object sender, RoutedEventArgs e)
@@ -154,6 +158,16 @@ namespace TrainBSM_v2
         private void ShowFireFrame_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = _fireFrame;
+        }
+
+        private void ShowCoolingFrame_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = _coolingFrame;
+        }
+
+        private void ShowTractionFrame_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = _tractionFrame;
         }
     }
 }

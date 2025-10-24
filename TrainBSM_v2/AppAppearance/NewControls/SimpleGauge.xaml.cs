@@ -125,7 +125,11 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         {
             var gauge = (SimpleGauge)d;
             if (gauge.IsLoaded)
+            {
+                gauge._DrawTicks();
+                gauge._DrawLabels();
                 gauge._DrawSegments();
+            }    
         }
 
         private static void OnSignVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

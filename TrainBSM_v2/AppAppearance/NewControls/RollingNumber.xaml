@@ -1,69 +1,70 @@
-﻿<UserControl x:Class="TrainBSM_v2.AppAppearance.Controls.RollingNumber"
+﻿<UserControl x:Class="TrainBSM_v2.AppAppearance.NewControls.RollingNumber"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <!-- Окрема цифра - біла рамка як у Gauge -->
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TrainBSM_v2.AppAppearance.NewControls">
     <Border CornerRadius="4" BorderThickness="1.5" BorderBrush="Black" Margin="2,0" 
-            Background="White" Padding="4">
+         Background="White" Padding="4">
         <Viewbox Stretch="Uniform">
             <Canvas Width="35" Height="50" ClipToBounds="True" Background="Transparent">
                 <StackPanel x:Name="DigitStack" Orientation="Vertical" Canvas.Top="0" Width="35">
                     <TextBlock Text="0" FontSize="36" Height="50" FontWeight="Bold"
-                               VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
+                            VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
                         </TextBlock.Effect>
                     </TextBlock>
                     <TextBlock Text="1" FontSize="36" Height="50" FontWeight="Bold"
-                               VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
+                            VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
                         </TextBlock.Effect>
                     </TextBlock>
                     <TextBlock Text="2" FontSize="36" Height="50" FontWeight="Bold"
-                               VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
+                            VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
                         </TextBlock.Effect>
                     </TextBlock>
                     <TextBlock Text="3" FontSize="36" Height="50" FontWeight="Bold"
-                               VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
+                            VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
                         </TextBlock.Effect>
                     </TextBlock>
                     <TextBlock Text="4" FontSize="36" Height="50" FontWeight="Bold"
-                               VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
+                            VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
                         </TextBlock.Effect>
                     </TextBlock>
                     <TextBlock Text="5" FontSize="36" Height="50" FontWeight="Bold"
-                               VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
+                            VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
                         </TextBlock.Effect>
                     </TextBlock>
                     <TextBlock Text="6" FontSize="36" Height="50" FontWeight="Bold"
-                               VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
+                            VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
                         </TextBlock.Effect>
                     </TextBlock>
                     <TextBlock Text="7" FontSize="36" Height="50" FontWeight="Bold"
-                               VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
+                            VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
                         </TextBlock.Effect>
                     </TextBlock>
                     <TextBlock Text="8" FontSize="36" Height="50" FontWeight="Bold"
-                               VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
+                            VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
                         </TextBlock.Effect>
                     </TextBlock>
                     <TextBlock Text="9" FontSize="36" Height="50" FontWeight="Bold"
-                               VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
+                            VerticalAlignment="Center" TextAlignment="Center" Foreground="LimeGreen">
                         <TextBlock.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
                         </TextBlock.Effect>

@@ -16,7 +16,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using TrainBSM_v2.AppAppearance.Controls;
 using TrainBSM_v2.AppAppearance.NewControls;
 
 using static TrainBSM_v2.EngineAnalogValue.EngineAnalogValueType;
@@ -27,10 +26,11 @@ namespace TrainBSM_v2.AppAppearance
     /// Логика взаимодействия для EngineControlUnit.xaml
     /// </summary>
     /// 
-    public partial class EngineControlUnit : UserControl
+    public partial class EngineControlFrame : UserControl
     {
-        private List<IGaugeControl> _gauges = new List<IGaugeControl>();
-        private List<ICounterControl> _counters = new List<ICounterControl>();
+        private HashSet<IGaugeControl> _gauges = new HashSet<IGaugeControl>();
+        private HashSet<ICounterControl> _counters = new HashSet<ICounterControl>();
+        private HashSet<DiscreteIndicator> _indicators = new HashSet<DiscreteIndicator>();
 
         private Random _rnd = new Random();
         private DispatcherTimer _timer;
@@ -40,7 +40,7 @@ namespace TrainBSM_v2.AppAppearance
         private bool _isMenuOpened = false;
         private ulong counter = 0;
 
-        public EngineControlUnit(DieselLocomotive locomotive)
+        public EngineControlFrame(DieselLocomotive locomotive)
         {
             InitializeComponent();
             InitializeGauges(locomotive);
@@ -61,7 +61,8 @@ namespace TrainBSM_v2.AppAppearance
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            foreach (IGaugeControl gauge in _gauges) {
+            foreach (IGaugeControl gauge in _gauges)
+            {
                 _DebugRandomGenerator(gauge);
             }
 
@@ -69,21 +70,35 @@ namespace TrainBSM_v2.AppAppearance
             {
                 counter.Add((ulong)_rnd.Next(0, 2000));
             }
+
+            foreach (DiscreteIndicator indicator in _indicators)
+            {
+                indicator.IsActive = _rnd.Next(0, 2) == 1;
+            }
         }
 
         private void InitializeGauges(DieselLocomotive locomotive)
         {
-            _gauges.Add(LoadAtCurrentSpeed);
-            _gauges.Add(EngineRpm);
-            _gauges.Add(FuelRackPosition);
-            _gauges.Add(IntakeManifoldPressure);
-            _gauges.Add(OilPressure);
-            _gauges.Add(OilTemperature);
-            _gauges.Add(CoolantTemperature);
-            _gauges.Add(IntakeAirTemperature);
+            _gauges.Add(engine_pos_rack_injection_ind);
+            _gauges.Add(engine_load_na_curr_ind);
+            _gauges.Add(engine_freq_rot_crank_ind);
+            _gauges.Add(engine_temp_air_vo_ind);
+            _gauges.Add(engine_temp_cool_ind);
+            _gauges.Add(engine_temp_oil_ind);
+            _gauges.Add(engine_press_air_vo_ind);
+            _gauges.Add(engine_press_oil_ind);
 
-            _counters.Add(TotalHours);
-            _counters.Add(TotalFuel);
+            _counters.Add(engine_obschee_cons_fuel_ind);
+            _counters.Add(engine_tot_mile_ind);
+
+            _indicators.Add(engine_rl_pwr_dsl_ind);
+            _indicators.Add(engine_rl_startera_ind);
+            _indicators.Add(engine_rl_fuel_pump_ind);
+            _indicators.Add(engine_rl_stop_dsl_ind);
+            _indicators.Add(engine_btn_start_dsl_ind);
+            _indicators.Add(engine_btn_stop_dsl_ind);
+            _indicators.Add(engine_flag_end_puska_ind);
+            _indicators.Add(engine_ena_na_start_ind);
         }
 
         private void ShowMenu()

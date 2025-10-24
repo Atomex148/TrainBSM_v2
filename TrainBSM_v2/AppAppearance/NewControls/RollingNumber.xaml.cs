@@ -14,11 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TrainBSM_v2.AppAppearance.Controls
+namespace TrainBSM_v2.AppAppearance.NewControls
 {
-    /// <summary>
-    /// Логика взаимодействия для RollingNumber.xaml
-    /// </summary>
     public partial class RollingNumber : UserControl
     {
         private readonly TranslateTransform _translate = new TranslateTransform();

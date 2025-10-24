@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using TrainBSM_v2.AppAppearance.NewControls;
 
-namespace TrainBSM_v2.AppAppearance.Controls
+namespace TrainBSM_v2.AppAppearance.NewControls
 {
     public partial class RollingCounter : UserControl, ICounterControl
     {
@@ -23,12 +23,16 @@ namespace TrainBSM_v2.AppAppearance.Controls
         public static readonly DependencyProperty SensorNameProperty = DependencyProperty.Register(
             nameof(SensorName), typeof(string), typeof(RollingCounter), new PropertyMetadata("Counter", OnSensorNameChanged));
 
+        public static readonly DependencyProperty ShowSensorNameProperty = DependencyProperty.Register(
+            nameof(ShowSensorName), typeof(bool), typeof(RollingCounter), new PropertyMetadata(true, OnShowSensorNameChanged));
+
         public RollingCounter()
         {
             InitializeComponent();
             Loaded += (s, e) =>
             {
                 InitNumbers(NumbersCount);
+                UpdateSensorNameVisibility();
             };
         }
 
@@ -56,6 +60,12 @@ namespace TrainBSM_v2.AppAppearance.Controls
             set => SetValue(ResetIfOverflowProperty, value);
         }
 
+        public bool ShowSensorName
+        {
+            get => (bool)GetValue(ShowSensorNameProperty);
+            set => SetValue(ShowSensorNameProperty, value);
+        }
+
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (RollingCounter)d;
@@ -74,6 +84,11 @@ namespace TrainBSM_v2.AppAppearance.Controls
             var control = (RollingCounter)d;
             if (control.NameText != null)
                 control.NameText.Text = (string)e.NewValue;
+        }
+        private static void OnShowSensorNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (RollingCounter)d;
+            control.UpdateSensorNameVisibility();
         }
 
         private void InitNumbers(int numbersCount)
@@ -107,6 +122,22 @@ namespace TrainBSM_v2.AppAppearance.Controls
                 _numbers[i].SetNumber(num);
             }
             _currNum = value;
+        }
+
+        private void UpdateSensorNameVisibility()
+        {
+            if (NameText == null || MainGrid?.RowDefinitions.Count < 2) return;
+
+            if (ShowSensorName)
+            {
+                NameText.Visibility = Visibility.Visible;
+                MainGrid.RowDefinitions[1].Height = GridLength.Auto;
+            }
+            else
+            {
+                NameText.Visibility = Visibility.Collapsed;
+                MainGrid.RowDefinitions[1].Height = new GridLength(0);
+            }
         }
 
         public void Update(ulong newValue)

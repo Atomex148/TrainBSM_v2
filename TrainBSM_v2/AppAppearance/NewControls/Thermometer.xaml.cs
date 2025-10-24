@@ -99,7 +99,11 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         {
             var thermometer = (Thermometer)d;
             if (thermometer.IsLoaded)
+            {
                 thermometer._DrawZones();
+                thermometer._DrawTicks();
+                thermometer._DrawLabels();
+            }
         }
 
         public void Update(double newValue)

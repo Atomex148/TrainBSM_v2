@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,15 +18,14 @@ using TrainBSM_v2.AppAppearance.NewControls;
 namespace TrainBSM_v2.AppAppearance
 {
     /// <summary>
-    /// Логика взаимодействия для FireFrame.xaml
+    /// Логика взаимодействия для CoolingFrame.xaml
     /// </summary>
-    public partial class FireFrame : UserControl
+    public partial class CoolingFrame : UserControl
     {
         private HashSet<DiscreteIndicator> _discreteIndicators = new HashSet<DiscreteIndicator>();
         private Random _rnd = new Random();
         private DispatcherTimer _timer;
-
-        public FireFrame(DieselLocomotive locomotive)
+        public CoolingFrame(DieselLocomotive locomotive)
         {
             InitializeComponent();
             InitializeIndicators(locomotive);
@@ -49,12 +47,14 @@ namespace TrainBSM_v2.AppAppearance
 
         private void InitializeIndicators(DieselLocomotive locomotive)
         {
-            _discreteIndicators.Add(fire_fire_v_cab_ind);
-            _discreteIndicators.Add(fire_fire_v_vvk_ind);
-            _discreteIndicators.Add(fire_fire_v_kapote_privod_ind);
-            _discreteIndicators.Add(fire_fire_v_kapote_comp_ind);
-            _discreteIndicators.Add(fire_fire_v_kapote_dis_ind);
-            _discreteIndicators.Add(fire_flt_fire_loop_ind);
+            _discreteIndicators.Add(cool_flt_ohlazhdeniya_bog_r_1_ind);
+            _discreteIndicators.Add(cool_flt_ohlazhdeniya_bog_r_2_ind);
+            _discreteIndicators.Add(cool_flt_ohlazhdeniya_dsl_r_ind);
+            _discreteIndicators.Add(cool_flt_ohlazhdeniya_rect_ind);
+            _discreteIndicators.Add(cool_ena_ohlazhdeniya_bog_1_ind);
+            _discreteIndicators.Add(cool_ena_ohlazhdeniya_bog_2_ind);
+            _discreteIndicators.Add(cool_ena_ohlazhdeniya_dsl_ind);
+            _discreteIndicators.Add(cool_ena_ohlazhdeniya_rect_ind);
         }
     }
 }

@@ -29,6 +29,6 @@
         <Border Grid.Column="1" Width="{Binding LabelMargin, ElementName=RootControl}"/>
 
         <TextBlock x:Name="Lable" Grid.Column="2" VerticalAlignment="Center"
-                   TextWrapping="Wrap"/>
+                   TextWrapping="Wrap" FontWeight="Bold"/>
     </Grid>
 </UserControl>
