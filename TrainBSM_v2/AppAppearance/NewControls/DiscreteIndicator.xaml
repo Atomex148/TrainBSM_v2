@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:TrainBSM_v2.AppAppearance.NewControls"
              mc:Ignorable="d"
              x:Name="RootControl">
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
@@ -14,15 +14,17 @@
         </Grid.ColumnDefinitions>
 
         <Viewbox Grid.Column="0" 
-                 Stretch="Uniform"
-                 StretchDirection="Both">
+         Stretch="Uniform"
+         StretchDirection="Both">
             <Grid Width="20" Height="20">
-                <Ellipse x:Name="LightBulb" Width="20" Height="20" Fill="Green" Stroke="Black" StrokeThickness="1"/>
+                <Ellipse x:Name="LightBulb" Width="20" Height="20" Fill="Green" Stroke="Black" 
+                         StrokeThickness="1" MouseLeftButtonDown="LightBulb_MouseLeftButtonDown"/>
 
-                <Image x:Name="InactiveImage" Width="20" Height="20" 
-                       Visibility="Collapsed" Stretch="Uniform"/>
-                <Image x:Name="ActiveImage" Width="20" Height="20" 
-                       Visibility="Collapsed" Stretch="Uniform" Opacity="0"/>
+                <Image x:Name="InactiveImage" Width="20" Height="20" Visibility="Collapsed" Stretch="Uniform"
+                       MouseLeftButtonDown="LightBulb_MouseLeftButtonDown"/>
+
+                <Image x:Name="ActiveImage" Width="20" Height="20" Visibility="Collapsed" Stretch="Uniform" Opacity="0"
+                       MouseLeftButtonDown="LightBulb_MouseLeftButtonDown"/>
             </Grid>
         </Viewbox>
 

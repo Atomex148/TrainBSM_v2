@@ -16,16 +16,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="AppAppearance\Assets\auxiliary_and_lightning\auxiliary.png" />
+    <None Remove="AppAppearance\Assets\auxiliary_and_lightning\lightning.png" />
     <None Remove="AppAppearance\Assets\cooling_frame\snowflake.png" />
     <None Remove="AppAppearance\Assets\cooling_frame\snowflake_indocator_off.png" />
     <None Remove="AppAppearance\Assets\cooling_frame\snowflake_indocator_on.png" />
     <None Remove="AppAppearance\Assets\fire_emergency\fire_shield.png" />
     <None Remove="AppAppearance\Assets\fire_emergency\flame_off.png" />
     <None Remove="AppAppearance\Assets\fire_emergency\flame_on.png" />
+    <None Remove="AppAppearance\Assets\pneumatic_and_power\compressor.png" />
+    <None Remove="AppAppearance\Assets\pneumatic_and_power\flash.png" />
+    <None Remove="AppAppearance\Assets\pneumatic_and_power\pneumatic.png" />
+    <None Remove="AppAppearance\Assets\toggle_switch_off.png" />
+    <None Remove="AppAppearance\Assets\toggle_switch_on.png" />
     <None Remove="AppAppearance\Assets\traction_frame\traction.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="AppAppearance\Assets\auxiliary_and_lightning\auxiliary.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="AppAppearance\Assets\auxiliary_and_lightning\lightning.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="AppAppearance\Assets\cooling_frame\snowflake.png" />
     <Resource Include="AppAppearance\Assets\cooling_frame\snowflake_indocator_off.png" />
     <Resource Include="AppAppearance\Assets\cooling_frame\snowflake_indocator_on.png" />
@@ -37,6 +50,21 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="AppAppearance\Assets\fire_emergency\flame_on.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="AppAppearance\Assets\pneumatic_and_power\compressor.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="AppAppearance\Assets\pneumatic_and_power\flash.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="AppAppearance\Assets\pneumatic_and_power\pneumatic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="AppAppearance\Assets\toggle_switch_off.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="AppAppearance\Assets\toggle_switch_on.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="AppAppearance\Assets\traction_frame\traction.png" />

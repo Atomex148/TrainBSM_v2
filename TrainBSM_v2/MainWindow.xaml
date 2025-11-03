@@ -20,6 +20,8 @@
             <Button Content="Пожарная безопасность" Margin="5" Click="ShowFireFrame_Click"/>
             <Button Content="Охлаждение" Margin="5" Click="ShowCoolingFrame_Click"/>
             <Button Content="Тяговой блок" Margin="5" Click="ShowTractionFrame_Click"/>
+            <Button Content="Вспомогательное и освещение" Margin="5" Click="AuxiliaryAndLightningFrame_Click"/>
+            <Button Content="Пневматика и питание" Margin="5" Click="PneumaticsAndPower_Click"/>
         </StackPanel>
         <Button x:Name="MenuButton" Content="Menu" Width="100" Height="19"
                 HorizontalAlignment="Right" VerticalAlignment="Top"

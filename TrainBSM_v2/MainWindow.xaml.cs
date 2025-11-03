@@ -22,6 +22,8 @@ namespace TrainBSM_v2
         private FireFrame _fireFrame;
         private CoolingFrame _coolingFrame;
         private TractionFrame _tractionFrame;
+        private AuxiliaryAndLightningFrame _auxiliaryAndLightningFrame;
+        private PneumaticsAndPower _pneumaticsAndPower;
 
         public MainWindow()
         {
@@ -36,6 +38,8 @@ namespace TrainBSM_v2
             _fireFrame = new FireFrame(_locomotive);
             _coolingFrame = new CoolingFrame(_locomotive);
             _tractionFrame = new TractionFrame(_locomotive);
+            _auxiliaryAndLightningFrame = new AuxiliaryAndLightningFrame(_locomotive);
+            _pneumaticsAndPower = new PneumaticsAndPower(_locomotive);
 
             this.PreviewMouseLeftButtonDown += MainWindow_PreviewMouseLeftButtonDown;
 
@@ -168,6 +172,16 @@ namespace TrainBSM_v2
         private void ShowTractionFrame_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = _tractionFrame;
+        }
+
+        private void AuxiliaryAndLightningFrame_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = _auxiliaryAndLightningFrame;
+        }
+
+        private void PneumaticsAndPower_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = _pneumaticsAndPower;
         }
     }
 }

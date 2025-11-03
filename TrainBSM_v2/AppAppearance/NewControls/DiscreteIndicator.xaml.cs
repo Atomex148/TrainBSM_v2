@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -43,6 +44,14 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         public static readonly DependencyProperty InactiveColorProperty = DependencyProperty.Register(
             nameof(InactiveColor), typeof(Brush), typeof(DiscreteIndicator),
             new PropertyMetadata(Brushes.Green, OnColorChanged));
+
+        public static readonly DependencyProperty IsClickableProperty = DependencyProperty.Register(
+            nameof(IsClickable), typeof(bool), typeof(DiscreteIndicator),
+            new PropertyMetadata(false));
+
+        public static readonly DependencyProperty AnimationDurationProperty = DependencyProperty.Register(
+            nameof(AnimationDuration), typeof(double), typeof(DiscreteIndicator),
+            new PropertyMetadata(300.0));
 
         public string LabelText
         {
@@ -98,8 +107,36 @@ namespace TrainBSM_v2.AppAppearance.NewControls
             set => SetValue(InactiveColorProperty, value);
         }
 
+        public bool IsClickable
+        {
+            get => (bool)GetValue(IsClickableProperty);
+            set => SetValue(IsClickableProperty, value);
+        }
+
+        public double AnimationDuration
+        {
+            get => (double)GetValue(AnimationDurationProperty);
+            set => SetValue(AnimationDurationProperty, value);
+        }
+
         public void ChangeActivness() => IsActive = !IsActive;
         public void ChangeActivness(bool activness) => IsActive = activness;
+
+        public void SetActiveColor(Brush color)
+        {
+            ActiveColor = color;
+        }
+
+        public void SetInactiveColor(Brush color)
+        {
+            InactiveColor = color;
+        }
+
+        public void SetColors(Brush activeColor, Brush inactiveColor)
+        {
+            ActiveColor = activeColor;
+            InactiveColor = inactiveColor;
+        }
 
         private static void OnLabelTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -156,8 +193,11 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         {
             if (UseImage)
             {
-                var animation = new DoubleAnimation(isActive ? 1 : 0, TimeSpan.FromMilliseconds(300));
-                ActiveImage.BeginAnimation(Image.OpacityProperty, animation);
+                var inactiveAnimation = new DoubleAnimation(isActive ? 0 : 1, TimeSpan.FromMilliseconds(AnimationDuration));
+                var activeAnimation = new DoubleAnimation(isActive ? 1 : 0, TimeSpan.FromMilliseconds(AnimationDuration));
+
+                InactiveImage.BeginAnimation(Image.OpacityProperty, inactiveAnimation);
+                ActiveImage.BeginAnimation(Image.OpacityProperty, activeAnimation);
             }
             else
             {
@@ -166,6 +206,12 @@ namespace TrainBSM_v2.AppAppearance.NewControls
         }
 
         public event EventHandler<bool>? OnActivityChanged;
+
+        private void LightBulb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsClickable) return;
+            IsActive = !IsActive;
+        }
 
         public DiscreteIndicator()
         {
