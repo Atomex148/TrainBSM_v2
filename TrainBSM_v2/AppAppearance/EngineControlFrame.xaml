@@ -17,7 +17,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="110"/>
+                    <RowDefinition Height="120"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Управление двигателем" 
@@ -75,11 +75,11 @@
                             </Grid.ColumnDefinitions>
 
                             <new_controls:RollingCounter x:Name="engine_obschee_cons_fuel_ind" Grid.Column="0" 
-                                                         NumbersCount="7" HorizontalAlignment="Center" Margin="1"
-                                                         SensorName="Общее использование топлива, л"/>
+                                                         NumbersCount="7" HorizontalAlignment="Center"
+                                                         SensorName="Общее использование топлива, л" Width="240" Margin="0,0,0,-3"/>
                             <new_controls:RollingCounter x:Name="engine_tot_mile_ind" Grid.Column="1" 
-                                                         NumbersCount="7" HorizontalAlignment="Center" Margin="1"
-                                                         SensorName="Общий пробег, км"/>
+                                                         NumbersCount="7" HorizontalAlignment="Center"
+                                                         SensorName="Общий пробег, км" Width="240" Margin="0,0,0,-3"/>
                         </Grid>
                     </Grid>
                 </Border>
